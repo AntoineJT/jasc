@@ -2,3 +2,6 @@
 # IntelliJ useless stuff
 *.iml
 .idea/
+
+# Binaries
+*.class
