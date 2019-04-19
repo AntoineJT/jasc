@@ -1,15 +1,6 @@
 package com.github.antoinejt.slam2.calculator;
 
 public class CalculatorEngine {
-    // Singleton, but not restrictive
-    private static CalculatorEngine instance = null;
-    public static CalculatorEngine getInstance(){
-        return instance != null ? instance : new CalculatorEngine();
-    }
-    public CalculatorEngine(){
-        instance = this;
-    }
-
     private Stack stack = new Stack<Float>();
 
     public void addNumber(float number){
