@@ -12,6 +12,10 @@ public final class CalculatorEngine {
         stack.push(f);
     }
 
+    public void clear(){
+        stack.clear();
+    }
+
     public List<Float> getNumbers(){
         List<Float> list = null;
         try {
@@ -30,6 +34,41 @@ public final class CalculatorEngine {
             ret[i] = (Float) stack.pop();
         }
         return ret;
+    }
+
+    private double getFunctionResult(FunctionType functionType) throws OperandException {
+        if (stack.getSize() > 0){
+            float calc = (float) stack.pop();
+            switch(functionType){ // TODO Implement that on ConsoleUI
+                case SQRT: return Math.sqrt(calc);
+                case LOG10: return Math.log10(calc);
+                case LN: return Math.log(calc);
+                case LOGB: return (int)(Math.log(calc)/Math.log(2)+1e-10); // https://stackoverflow.com/questions/3305059/how-do-you-calculate-log-base-2-in-java-for-integers
+                case COS: return Math.cos(calc);
+                case SIN: return Math.sin(calc);
+                case TAN: return Math.tan(calc);
+                case ARCCOS: return Math.acos(calc);
+                case ARCSIN: return Math.asin(calc);
+                case ARCTAN: return Math.atan(calc);
+                case EXP: return Math.exp(calc);
+            }
+        } else {
+            throw new OperandException("Stack is empty!");
+        }
+        return Double.NaN;
+    }
+
+    public void applyFunction(FunctionType functionType) throws OperandException, CalculatorException {
+        try {
+            double result = getFunctionResult(functionType);
+            if (!Double.isNaN(result)){
+                stack.push(Double.valueOf(result).floatValue());
+            } else {
+                throw new CalculatorException("Some weird error occurred when applying function. Please contact the application maintainer!");
+            }
+        } catch(OperandException unused) {
+            System.err.println("No operand left to apply this function to!");
+        }
     }
 
     public void operate(OperationType operation) throws ArithmeticException, OperandException, CalculatorException {
