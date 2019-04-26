@@ -8,7 +8,7 @@ import com.github.antoinejt.jasc.util.TextFormat;
 
 import java.util.*;
 
-public final class ConsoleUI {
+final class ConsoleUI {
     private static void displayHelp(){
         TextFormat.listThings("Available operators (acts on 2 operands) : ",
                 "+ : Addition operator",
@@ -84,14 +84,14 @@ public final class ConsoleUI {
                 } else {
                     boolean isFunction = false;
                     switch(input){
-                        case "=": calculatorEngine.getNumbers().forEach(val -> System.out.println(val)); break;
+                        case "=": calculatorEngine.getNumbers().forEach(System.out::println); break;
                         case "help": displayHelp(); break;
                         case "clear": calculatorEngine.clear(); break;
                         case "quit": System.exit(0);
                         default: isFunction = true;
                     }
                     if (isFunction){
-                        FunctionType functionType = null;
+                        FunctionType functionType;
                         switch(input){ // TODO Maybe implement that with a simple private enum
                             case "sqrt": functionType = FunctionType.SQRT; break;
                             case "log": functionType = FunctionType.LOG10; break;

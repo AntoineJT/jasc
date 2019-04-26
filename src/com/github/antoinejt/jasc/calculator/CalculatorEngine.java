@@ -5,24 +5,21 @@ import com.github.antoinejt.jasc.util.ReflectUtil;
 import java.util.List;
 
 public final class CalculatorEngine {
-    private Stack stack = new Stack<Float>();
+    private final Stack<Float> stack = new Stack<>();
 
     public void addNumber(float number){
-        Float f = new Float(number);
-        stack.push(f);
+        stack.push(number);
     }
 
     public void clear(){
         stack.clear();
     }
 
-    public List<Float> getNumbers(){
-        List<Float> list = null;
+    public List getNumbers(){
+        List list = null;
         try {
             list = (List) ReflectUtil.getPrivateField(stack, "stack");
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
+        } catch (IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }
         return list;
@@ -31,14 +28,14 @@ public final class CalculatorEngine {
     private float[] getOperands(){
         float[] ret = new float[2];
         for (int i = 0; i < 2; i++){
-            ret[i] = (Float) stack.pop();
+            ret[i] = stack.pop();
         }
         return ret;
     }
 
     private double getFunctionResult(FunctionType functionType) throws OperandException {
         if (stack.getSize() > 0){
-            float calc = (float) stack.pop();
+            float calc = stack.pop();
             switch(functionType){ // TODO Implement that on ConsoleUI
                 case SQRT: return Math.sqrt(calc);
                 case LOG10: return Math.log10(calc);
@@ -58,7 +55,7 @@ public final class CalculatorEngine {
         return Double.NaN;
     }
 
-    public void applyFunction(FunctionType functionType) throws OperandException, CalculatorException {
+    public void applyFunction(FunctionType functionType) throws CalculatorException {
         try {
             double result = getFunctionResult(functionType);
             if (!Double.isNaN(result)){

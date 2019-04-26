@@ -2,7 +2,7 @@ package com.github.antoinejt.jasc.util;
 
 public final class TextFormat {
     public static final class FormattedText {
-        private String formattedText;
+        private final String formattedText;
 
         private FormattedText(String formattedText){
             this.formattedText = formattedText;
