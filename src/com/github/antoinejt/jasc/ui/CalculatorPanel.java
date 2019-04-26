@@ -1,4 +1,4 @@
-package com.github.antoinejt.slam2.calculator.ui;
+package com.github.antoinejt.jasc.ui;
 
 import javax.swing.*;
 import java.awt.*;

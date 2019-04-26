@@ -1,6 +1,6 @@
-package com.github.antoinejt.slam2.calculator.ui;
+package com.github.antoinejt.jasc.ui;
 
-import com.github.antoinejt.slam2.calculator.CalculatorException;
+import com.github.antoinejt.jasc.CalculatorException;
 
 import javax.swing.*;
 import java.util.ArrayList;

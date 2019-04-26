@@ -1,9 +1,7 @@
-package com.github.antoinejt.slam2.calculator.ui;
+package com.github.antoinejt.jasc.ui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 class NumberPanel extends JPanel {
     private CalculatorPanel parent;
@@ -19,12 +17,7 @@ class NumberPanel extends JPanel {
 
     private JButton getDotButton(){
         JButton button = new CalculatorButton(".");
-        button.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                numberList.makeFloat();
-            }
-        });
+        button.addActionListener(unused -> numberList.makeFloat());
         return button;
     }
 
