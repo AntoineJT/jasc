@@ -6,9 +6,7 @@ import com.github.antoinejt.jasc.calculator.OperandException;
 import com.github.antoinejt.jasc.calculator.OperationType;
 import com.github.antoinejt.jasc.util.TextFormat;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public final class ConsoleUI {
     private static void displayHelp(){
@@ -71,18 +69,15 @@ public final class ConsoleUI {
                     System.err.println("Your input is invalid!");
                 }
             } else {
-                OperationType operationType = null;
-                boolean canOperate = true;
-                switch(input) {
-                    case "+": operationType = OperationType.ADDITION; break;
-                    case "-": operationType = OperationType.SUBSTRACTION; break;
-                    case "*": operationType = OperationType.MULTIPLICATION; break;
-                    case "/": operationType = OperationType.DIVISION; break;
-                    default: canOperate = false;
-                }
-                if (canOperate){
+                Map<String, OperationType> operators = new HashMap<>();
+                operators.put("+", OperationType.ADDITION);
+                operators.put("-", OperationType.SUBSTRACTION);
+                operators.put("*", OperationType.MULTIPLICATION);
+                operators.put("/", OperationType.DIVISION);
+
+                if (operators.containsKey(input)){
                     try {
-                        calculatorEngine.operate(operationType);
+                        calculatorEngine.operate(operators.get(input));
                     } catch(OperandException unused){
                         System.err.println("You need to specify at least 2 operands before you can make some calculation!");
                     }
@@ -97,7 +92,7 @@ public final class ConsoleUI {
                     }
                     if (isFunction){
                         FunctionType functionType = null;
-                        switch(input){
+                        switch(input){ // TODO Maybe implement that with a simple private enum
                             case "sqrt": functionType = FunctionType.SQRT; break;
                             case "log": functionType = FunctionType.LOG10; break;
                             case "ln": functionType = FunctionType.LN; break;
