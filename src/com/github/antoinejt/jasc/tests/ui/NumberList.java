@@ -1,4 +1,4 @@
-package com.github.antoinejt.jasc.ui;
+package com.github.antoinejt.jasc.tests.ui;
 
 import com.github.antoinejt.jasc.calculator.CalculatorException;
 
