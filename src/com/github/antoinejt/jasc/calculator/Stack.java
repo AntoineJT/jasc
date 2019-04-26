@@ -1,18 +1,10 @@
-package com.github.antoinejt.jasc;
+package com.github.antoinejt.jasc.calculator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stack<T> {
+public final class Stack<T> {
     private List<T> stack = new ArrayList<>();
-
-    /*
-    public Stack(){}
-
-    public Stack(Stack original){
-        original.stack.forEach(val -> stack.add((T)val));
-    }
-    */
 
     public T pop(){
         int index = stack.size() - 1;

@@ -1,6 +1,6 @@
 package com.github.antoinejt.jasc.ui;
 
-import com.github.antoinejt.jasc.CalculatorException;
+import com.github.antoinejt.jasc.calculator.CalculatorException;
 
 import java.awt.event.ActionListener;
 

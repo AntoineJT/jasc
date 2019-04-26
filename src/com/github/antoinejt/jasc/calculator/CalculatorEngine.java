@@ -1,8 +1,10 @@
-package com.github.antoinejt.jasc;
+package com.github.antoinejt.jasc.calculator;
+
+import com.github.antoinejt.jasc.util.ReflectUtil;
 
 import java.util.List;
 
-public class CalculatorEngine {
+public final class CalculatorEngine {
     private Stack stack = new Stack<Float>();
 
     public void addNumber(float number){
@@ -20,18 +22,6 @@ public class CalculatorEngine {
             e.printStackTrace();
         }
         return list;
-    }
-
-    public enum OperationType {
-        ADDITION,
-        SUBSTRACTION,
-        MULTIPLICATION,
-        DIVISION
-    }
-    public static class OperandException extends Exception {
-        public OperandException(String msg){
-            super(msg);
-        }
     }
 
     private float[] getOperands(){
