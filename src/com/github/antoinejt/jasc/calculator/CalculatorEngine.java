@@ -80,6 +80,8 @@ public final class CalculatorEngine {
                 case SUBSTRACTION: calc = operand[1] - operand[0]; break;
                 case MULTIPLICATION: calc = operand[1] * operand[0]; break;
                 case DIVISION: calc = operand[1] / operand[0]; break;
+                case MODULO: calc = operand[1] % operand[0]; break;
+                case POWER: calc = Double.valueOf(Math.pow(operand[1], operand[0])).floatValue(); break;
                 default: throw new CalculatorException("The provided operation is not handled!");
             }
             // I can't imagine how this can happened

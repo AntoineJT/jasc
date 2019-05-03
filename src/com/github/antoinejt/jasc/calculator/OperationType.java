@@ -4,5 +4,7 @@ public enum OperationType {
     ADDITION,
     SUBSTRACTION,
     MULTIPLICATION,
-    DIVISION
+    DIVISION,
+    MODULO,
+    POWER
 }

@@ -14,7 +14,9 @@ final class ConsoleUI {
                 "+ : Addition operator",
                 "- : Substraction operator",
                 "* : Multiplication operator",
-                "/ : Division operator").print();
+                "/ : Division operator",
+                "% : Modulo operator",
+                "^ : Power operator").print();
         TextFormat.listThings("Available functions (acts on 1 operand) : ",
                 "sqrt : Perform a square root",
                 "log : Perform a decimal logarithm",
@@ -49,6 +51,15 @@ final class ConsoleUI {
                 "To know available commands, you can type help");
     }
 
+    private static void printStackContent(CalculatorEngine calculatorEngine) {
+        List list = calculatorEngine.getNumbers();
+        if (list.size() > 0){
+            list.forEach(System.out::println);
+        } else {
+            System.err.println("Stack is empty!");
+        }
+    }
+
     public static void useConsole() throws Exception {
         displayIntro();
         CalculatorEngine calculatorEngine = new CalculatorEngine();
@@ -57,7 +68,7 @@ final class ConsoleUI {
         while (true){
             input = scanner.next();
             List<String> commands = Arrays.asList(
-                    "+", "-", "*", "/", // Operators
+                    "+", "-", "*", "/", "%", "^", // Operators
                     "sqrt", "log", "ln", "lb", "cos", "sin", "tan", "arccos", "arcsin", "arctan", "exp", // Functions
                     "=", "help", "clear", "quit" // Commands
             );
@@ -75,6 +86,8 @@ final class ConsoleUI {
                 operators.put("-", OperationType.SUBSTRACTION);
                 operators.put("*", OperationType.MULTIPLICATION);
                 operators.put("/", OperationType.DIVISION);
+                operators.put("%", OperationType.MODULO);
+                operators.put("^", OperationType.POWER);
 
                 if (operators.containsKey(input)){
                     try {
@@ -85,7 +98,7 @@ final class ConsoleUI {
                 } else {
                     boolean isFunction = false;
                     switch(input){
-                        case "=": calculatorEngine.getNumbers().forEach(System.out::println); break;
+                        case "=": printStackContent(calculatorEngine); break;
                         case "help": displayHelp(); break;
                         case "clear": calculatorEngine.clear(); break;
                         case "quit": System.exit(0);
