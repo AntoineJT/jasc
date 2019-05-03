@@ -28,6 +28,7 @@ final class ConsoleUI {
                 "arctan : Perform an arc tan",
                 "exp : Make it exponent").print();
         TextFormat.listThings("Available commands : ",
+                "= : Print the content of the stack",
                 "help : Show the list of available commands",
                 "clear : Reset stack content",
                 "quit : Allows to quit").print();
@@ -56,9 +57,9 @@ final class ConsoleUI {
         while (true){
             input = scanner.next();
             List<String> commands = Arrays.asList(
-                    "+","-","*", "/","=", // Operators
+                    "+", "-", "*", "/", // Operators
                     "sqrt", "log", "ln", "lb", "cos", "sin", "tan", "arccos", "arcsin", "arctan", "exp", // Functions
-                    "help","clear","quit" // Commands
+                    "=", "help", "clear", "quit" // Commands
             );
             boolean hasInputNumber = !commands.contains(input);
             if (hasInputNumber){

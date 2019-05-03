@@ -10,7 +10,7 @@ public final class TextFormat {
 
         public String toString(){
             return formattedText;
-        }
+        } // It's not needed to call that, implicit call will be done when you print the object (?)
 
         public void print(){
             System.out.print(formattedText);
