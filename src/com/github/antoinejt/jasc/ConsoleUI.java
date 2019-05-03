@@ -52,9 +52,9 @@ final class ConsoleUI {
     }
 
     private static void printStackContent(CalculatorEngine calculatorEngine) {
-        List list = calculatorEngine.getNumbers();
-        if (list.size() > 0){
-            list.forEach(System.out::println);
+        List stackContent = calculatorEngine.getNumbers();
+        if (stackContent.size() > 0){
+            stackContent.forEach(System.out::println);
         } else {
             System.err.println("Stack is empty!");
         }

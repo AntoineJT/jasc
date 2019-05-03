@@ -16,13 +16,13 @@ public final class CalculatorEngine {
     }
 
     public List getNumbers(){
-        List list = null;
+        List stackContent = null;
         try {
-            list = (List) ReflectUtil.getPrivateField(stack, "stack");
+            stackContent = (List) ReflectUtil.getPrivateField(stack, "stack");
         } catch (IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }
-        return list;
+        return stackContent;
     }
 
     private float[] getOperands(){
@@ -68,12 +68,16 @@ public final class CalculatorEngine {
         }
     }
 
-    public void operate(OperationType operation) throws ArithmeticException, OperandException, CalculatorException {
+    public void operate(OperationType operation) throws OperandException, CalculatorException {
         if (stack.getSize() > 1) {
             float[] operand = getOperands();
             float calc;
             if (operation == OperationType.DIVISION && operand[0] == 0.0f){
-                throw new ArithmeticException("Division by zero!");
+                System.err.println("Division by zero!");
+                for(int i = 0; i < 2; i++){
+                    stack.push(operand[1-i]); // Reinject operands into the stack!
+                }
+                return;
             }
             switch(operation){
                 case ADDITION: calc = operand[1] + operand[0]; break;
