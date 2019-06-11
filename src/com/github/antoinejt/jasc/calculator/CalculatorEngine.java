@@ -19,35 +19,36 @@ public final class CalculatorEngine {
         List stackContent = null;
         try {
             stackContent = (List) ReflectUtil.getPrivateField(stack, "stack");
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
+        } catch (IllegalAccessException | NoSuchFieldException exception) {
+            exception.printStackTrace();
         }
         return stackContent;
     }
 
     private float[] getOperands(){
-        float[] ret = new float[2];
+        float[] operands = new float[2];
         for (int i = 0; i < 2; i++){
-            ret[i] = stack.pop();
+            operands[i] = stack.pop();
         }
-        return ret;
+        return operands;
     }
 
     private double getFunctionResult(FunctionType functionType) throws OperandException {
         if (stack.getSize() > 0){
-            float calc = stack.pop();
-            switch(functionType){ // TODO Implement that on ConsoleUI
-                case SQRT: return Math.sqrt(calc);
-                case LOG10: return Math.log10(calc);
-                case LN: return Math.log(calc);
-                case LOGB: return (int)(Math.log(calc)/Math.log(2)+1e-10); // https://stackoverflow.com/questions/3305059/how-do-you-calculate-log-base-2-in-java-for-integers
-                case COS: return Math.cos(calc);
-                case SIN: return Math.sin(calc);
-                case TAN: return Math.tan(calc);
-                case ARCCOS: return Math.acos(calc);
-                case ARCSIN: return Math.asin(calc);
-                case ARCTAN: return Math.atan(calc);
-                case EXP: return Math.exp(calc);
+            float number = stack.pop();
+            switch(functionType){ // TODO Implement that on ConsoleUI (why?)
+                case SQRT: return Math.sqrt(number);
+                case LOG10: return Math.log10(number);
+                case LN: return Math.log(number);
+                // TODO Put that in a dedicated function
+                case LOGB: return (int)(Math.log(number)/Math.log(2)+1e-10); // https://stackoverflow.com/questions/3305059/how-do-you-calculate-log-base-2-in-java-for-integers
+                case COS: return Math.cos(number);
+                case SIN: return Math.sin(number);
+                case TAN: return Math.tan(number);
+                case ARCCOS: return Math.acos(number);
+                case ARCSIN: return Math.asin(number);
+                case ARCTAN: return Math.atan(number);
+                case EXP: return Math.exp(number);
             }
         } else {
             throw new OperandException("Stack is empty!");
@@ -59,7 +60,7 @@ public final class CalculatorEngine {
         try {
             double result = getFunctionResult(functionType);
             if (!Double.isNaN(result)){
-                stack.push(Double.valueOf(result).floatValue());
+                stack.push((float) result);
             } else {
                 throw new CalculatorException("Some weird error occurred when applying function. Please contact the application maintainer!");
             }
@@ -70,27 +71,27 @@ public final class CalculatorEngine {
 
     public void operate(OperationType operation) throws OperandException, CalculatorException {
         if (stack.getSize() > 1) {
-            float[] operand = getOperands();
-            float calc;
-            if (operation == OperationType.DIVISION && operand[0] == 0.0f){
+            float[] operands = getOperands();
+            float result;
+            if (operation == OperationType.DIVISION && operands[0] == 0.0f){
                 System.err.println("Division by zero!");
                 for(int i = 0; i < 2; i++){
-                    stack.push(operand[1-i]); // Reinject operands into the stack!
+                    stack.push(operands[1-i]); // Reinject operands into the stack!
                 }
                 return;
             }
             switch(operation){
-                case ADDITION: calc = operand[1] + operand[0]; break;
-                case SUBSTRACTION: calc = operand[1] - operand[0]; break;
-                case MULTIPLICATION: calc = operand[1] * operand[0]; break;
-                case DIVISION: calc = operand[1] / operand[0]; break;
-                case MODULO: calc = operand[1] % operand[0]; break;
-                case POWER: calc = (float) Math.pow(operand[1], operand[0]); break;
+                case ADDITION: result = operands[1] + operands[0]; break;
+                case SUBSTRACTION: result = operands[1] - operands[0]; break;
+                case MULTIPLICATION: result = operands[1] * operands[0]; break;
+                case DIVISION: result = operands[1] / operands[0]; break;
+                case MODULO: result = operands[1] % operands[0]; break;
+                case POWER: result = (float) Math.pow(operands[1], operands[0]); break;
                 default: throw new CalculatorException("The provided operation is not handled!");
             }
             // I can't imagine how this can happened
-            // if (Float.isNaN(calc)) return;
-            stack.push(calc);
+            // if (Float.isNaN(result)) return;
+            stack.push(result);
         } else {
             throw new OperandException("Can't operate without at least 2 operands!");
         }

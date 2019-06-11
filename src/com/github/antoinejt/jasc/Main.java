@@ -4,8 +4,8 @@ public class Main {
     public static void main(String[] args){
         try {
             ConsoleUI.useConsole();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
 }

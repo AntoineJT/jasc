@@ -9,6 +9,24 @@ import com.github.antoinejt.jasc.util.TextFormat;
 import java.util.*;
 
 final class ConsoleUI {
+    private static final List<String> commands = new ArrayList<>();
+    private static final Map<String, OperationType> operators = new HashMap<>();
+    static {
+        operators.put("+", OperationType.ADDITION);
+        operators.put("-", OperationType.SUBSTRACTION);
+        operators.put("*", OperationType.MULTIPLICATION);
+        operators.put("/", OperationType.DIVISION);
+        operators.put("%", OperationType.MODULO);
+        operators.put("^", OperationType.POWER);
+
+        commands.addAll(operators.keySet()); // operators are added here
+        commands.addAll(Arrays.asList(
+            "sqrt", "log", "ln", "lb", "cos", "sin", "tan", "arccos", "arcsin", "arctan", "exp", // Functions
+            "=", "help", "clear", "quit" // Commands
+        ));
+    }
+
+    // TODO Replace that by some txt templates
     private static void displayHelp(){
         TextFormat.listThings("Available operators (acts on 2 operands) : ",
                 "+ : Addition operator",
@@ -67,11 +85,6 @@ final class ConsoleUI {
         String input;
         while (true){
             input = scanner.next();
-            List<String> commands = Arrays.asList(
-                    "+", "-", "*", "/", "%", "^", // Operators
-                    "sqrt", "log", "ln", "lb", "cos", "sin", "tan", "arccos", "arcsin", "arctan", "exp", // Functions
-                    "=", "help", "clear", "quit" // Commands
-            );
             boolean hasInputNumber = !commands.contains(input);
             if (hasInputNumber){
                 try {
@@ -81,14 +94,6 @@ final class ConsoleUI {
                     System.err.println("Your input is invalid!");
                 }
             } else {
-                Map<String, OperationType> operators = new HashMap<>();
-                operators.put("+", OperationType.ADDITION);
-                operators.put("-", OperationType.SUBSTRACTION);
-                operators.put("*", OperationType.MULTIPLICATION);
-                operators.put("/", OperationType.DIVISION);
-                operators.put("%", OperationType.MODULO);
-                operators.put("^", OperationType.POWER);
-
                 if (operators.containsKey(input)){
                     try {
                         calculatorEngine.operate(operators.get(input));
