@@ -10,8 +10,21 @@ import java.util.*;
 
 final class ConsoleUI {
     private static final List<String> commands = new ArrayList<>();
+    private static final Map<String, FunctionType> functions = new HashMap<>();
     private static final Map<String, OperationType> operators = new HashMap<>();
     static {
+        functions.put("sqrt", FunctionType.SQRT);
+        functions.put("log", FunctionType.LOG10);
+        functions.put("ln", FunctionType.LN);
+        functions.put("lb", FunctionType.LOGB);
+        functions.put("cos", FunctionType.COS);
+        functions.put("sin", FunctionType.SIN);
+        functions.put("tan", FunctionType.TAN);
+        functions.put("arccos", FunctionType.ARCCOS);
+        functions.put("arcsin", FunctionType.ARCSIN);
+        functions.put("arctan", FunctionType.ARCTAN);
+        functions.put("exp", FunctionType.EXP);
+
         operators.put("+", OperationType.ADDITION);
         operators.put("-", OperationType.SUBSTRACTION);
         operators.put("*", OperationType.MULTIPLICATION);
@@ -19,9 +32,9 @@ final class ConsoleUI {
         operators.put("%", OperationType.MODULO);
         operators.put("^", OperationType.POWER);
 
+        commands.addAll(functions.keySet()); // functions are added here
         commands.addAll(operators.keySet()); // operators are added here
         commands.addAll(Arrays.asList(
-            "sqrt", "log", "ln", "lb", "cos", "sin", "tan", "arccos", "arcsin", "arctan", "exp", // Functions
             "=", "help", "clear", "quit" // Commands
         ));
     }
@@ -64,7 +77,7 @@ final class ConsoleUI {
                 "Version : " + Constants.VERSION,
                 "Last update : " + Constants.LAST_UPDATE,
                 "--------------------------------",
-                "This calculator uses a stack, so you must defines at least 2 numbers before using some calculation operator",
+                "This calculator uses a stack, so you must define at least 2 numbers before using some calculation operator",
                 "You must type numbers with or without a dot, not a comma",
                 "To know available commands, you can type help");
     }
@@ -85,8 +98,7 @@ final class ConsoleUI {
         String input;
         while (true){
             input = scanner.next();
-            boolean hasInputNumber = !commands.contains(input);
-            if (hasInputNumber){
+            if (!commands.contains(input)){ // if it's a number
                 try {
                     float number = Float.parseFloat(input);
                     calculatorEngine.addNumber(number);
@@ -110,22 +122,12 @@ final class ConsoleUI {
                         default: isFunction = true;
                     }
                     if (isFunction){
-                        FunctionType functionType;
-                        switch(input){ // TODO Maybe implement that with a simple private enum
-                            case "sqrt": functionType = FunctionType.SQRT; break;
-                            case "log": functionType = FunctionType.LOG10; break;
-                            case "ln": functionType = FunctionType.LN; break;
-                            case "lb": functionType = FunctionType.LOGB; break;
-                            case "cos": functionType = FunctionType.COS; break;
-                            case "sin": functionType = FunctionType.SIN; break;
-                            case "tan": functionType = FunctionType.TAN; break;
-                            case "arccos": functionType = FunctionType.ARCCOS; break;
-                            case "arcsin": functionType = FunctionType.ARCSIN; break;
-                            case "arctan": functionType = FunctionType.ARCTAN; break;
-                            case "exp": functionType = FunctionType.EXP; break;
-                            default: throw new Exception("This is not good to corrupt my list, hack3rm4n!");
+                        if (functions.containsKey(input)) {
+                            FunctionType functionType = functions.get(input);
+                            calculatorEngine.applyFunction(functionType);
+                        } else {
+                            throw new Exception("This is not good to corrupt my list, hack3rm4n!");
                         }
-                        calculatorEngine.applyFunction(functionType);
                     }
                 }
             }
