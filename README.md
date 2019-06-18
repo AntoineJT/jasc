@@ -13,7 +13,7 @@ Create a calculator using a stack to make calculation and provide a Console User
 
 ## Modifying this software
 
-If you modify my software, please fork it. It will indicate to me that this is useful and is not a random project on my GitHub account.
+If you want to modify my software, please fork it. It will show me that this is useful and not a random project on my GitHub account.
 
 ## License
 
