@@ -84,52 +84,61 @@ final class ConsoleUI {
 
     private static void printStackContent(CalculatorEngine calculatorEngine) {
         List stackContent = calculatorEngine.getNumbers();
-        if (stackContent.size() > 0){
+        int stackContentSize = stackContent.size();
+
+        if (stackContentSize > 0){
             stackContent.forEach(System.out::println);
-        } else {
-            System.err.println("Stack is empty!");
+            return;
         }
+        System.err.println("Stack is empty!");
     }
 
-    public static void useConsole() throws Exception {
+    static void useConsole() throws Exception {
         displayIntro();
+
         CalculatorEngine calculatorEngine = new CalculatorEngine();
         Scanner scanner = new Scanner(System.in);
         String input;
+
         while (true){
             input = scanner.next();
             if (!commands.contains(input)){ // if it's a number
                 try {
                     float number = Float.parseFloat(input);
+
                     calculatorEngine.addNumber(number);
                 } catch(NumberFormatException unused){
                     System.err.println("Your input is invalid!");
                 }
-            } else {
-                if (operators.containsKey(input)){
-                    try {
-                        calculatorEngine.operate(operators.get(input));
-                    } catch(OperandException unused){
-                        System.err.println("You need to specify at least 2 operands before you can make some calculation!");
-                    }
-                } else {
-                    boolean isFunction = false;
-                    switch(input){
-                        case "=": printStackContent(calculatorEngine); break;
-                        case "help": displayHelp(); break;
-                        case "clear": calculatorEngine.clear(); break;
-                        case "quit": System.exit(0);
-                        default: isFunction = true;
-                    }
-                    if (isFunction){
-                        if (functions.containsKey(input)) {
-                            FunctionType functionType = functions.get(input);
-                            calculatorEngine.applyFunction(functionType);
-                        } else {
-                            throw new Exception("This is not good to corrupt my list, hack3rm4n!");
-                        }
-                    }
+                return;
+            }
+            if (operators.containsKey(input)){
+                try {
+                    OperationType operationType = operators.get(input);
+
+                    calculatorEngine.operate(operationType);
+                } catch(OperandException unused){
+                    System.err.println("You need to specify at least 2 operands before you can make some calculation!");
                 }
+                return;
+            }
+
+            boolean isFunction = false;
+
+            switch(input){
+                case "=": printStackContent(calculatorEngine); break;
+                case "help": displayHelp(); break;
+                case "clear": calculatorEngine.clear(); break;
+                case "quit": System.exit(0);
+                default: isFunction = true;
+            }
+            if (isFunction){
+                if (functions.containsKey(input)) {
+                    FunctionType functionType = functions.get(input);
+                    calculatorEngine.applyFunction(functionType);
+                    return;
+                }
+                throw new Exception("This is not good to corrupt my list, hack3rm4n!");
             }
         }
     }
