@@ -4,7 +4,7 @@ import com.github.antoinejt.jasc.calculator.CalculatorEngine;
 import com.github.antoinejt.jasc.calculator.FunctionType;
 import com.github.antoinejt.jasc.calculator.OperandException;
 import com.github.antoinejt.jasc.calculator.OperationType;
-import com.github.antoinejt.jasc.util.TextFormat;
+import com.github.antoinejt.jasc.util.TextFormatter;
 
 import java.util.*;
 
@@ -41,14 +41,14 @@ final class ConsoleUI {
 
     // TODO Replace that by some txt templates
     private static void displayHelp(){
-        TextFormat.listThings("Available operators (acts on 2 operands) : ",
+        TextFormatter.listThings("Available operators (acts on 2 operands) : ",
                 "+ : Addition operator",
                 "- : Substraction operator",
                 "* : Multiplication operator",
                 "/ : Division operator",
                 "% : Modulo operator",
                 "^ : Power operator").print();
-        TextFormat.listThings("Available functions (acts on 1 operand) : ",
+        TextFormatter.listThings("Available functions (acts on 1 operand) : ",
                 "sqrt : Perform a square root",
                 "log : Perform a decimal logarithm",
                 "ln : Perform a napierian logarithm",
@@ -60,7 +60,7 @@ final class ConsoleUI {
                 "arcsin : Perform an arc sine",
                 "arctan : Perform an arc tan",
                 "exp : Make it exponent").print();
-        TextFormat.listThings("Available commands : ",
+        TextFormatter.listThings("Available commands : ",
                 "= : Print the content of the stack",
                 "help : Show the list of available commands",
                 "clear : Reset stack content",
@@ -68,7 +68,7 @@ final class ConsoleUI {
     }
 
     private static void displayIntro(){
-        TextFormat.printLines(
+        TextFormatter.printLines(
                 "Just Another Stack Calculator",
                 "-------------------------------",
                 "Created by Antoine James Tournepiche",
