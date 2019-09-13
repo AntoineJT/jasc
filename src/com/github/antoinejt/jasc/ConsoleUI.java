@@ -13,6 +13,7 @@ final class ConsoleUI {
     private static final Map<String, FunctionType> functions = new HashMap<>();
     private static final Map<String, OperationType> operators = new HashMap<>();
     static {
+        // TODO Refactor that
         functions.put("sqrt", FunctionType.SQRT);
         functions.put("log", FunctionType.LOG10);
         functions.put("ln", FunctionType.LN);
@@ -135,6 +136,7 @@ final class ConsoleUI {
             if (isFunction){
                 if (functions.containsKey(input)) {
                     FunctionType functionType = functions.get(input);
+
                     calculatorEngine.applyFunction(functionType);
                     return;
                 }

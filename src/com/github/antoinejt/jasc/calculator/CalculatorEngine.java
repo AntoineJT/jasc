@@ -2,12 +2,9 @@ package com.github.antoinejt.jasc.calculator;
 
 import com.github.antoinejt.jasc.util.ReflectUtil;
 
-import java.io.PrintStream;
 import java.util.List;
 
 public final class CalculatorEngine {
-    private static final PrintStream syserr = System.err;
-
     private final Stack<Float> stack = new Stack<>();
 
     public void addNumber(float number){
@@ -52,6 +49,8 @@ public final class CalculatorEngine {
         if (stackSize > 0){
             float number = stack.pop();
 
+            // TODO Refactor that
+            // enum with consumer to refactor?
             switch(functionType){ // TODO Implement that on ConsoleUI (why?)
                 case SQRT: return Math.sqrt(number);
                 case LOG10: return Math.log10(number);
@@ -69,13 +68,13 @@ public final class CalculatorEngine {
         throw new OperandException("Stack is empty!");
     }
 
-    public void applyFunction(FunctionType functionType) throws CalculatorException {
+    public void applyFunction(FunctionType functionType) {
         try {
-            double result = getFunctionResult(functionType);
+            float result = (float) getFunctionResult(functionType);
 
-            stack.push((float) result);
+            stack.push(result);
         } catch(OperandException unused) {
-            syserr.println("No operand left to apply this function to!");
+            System.err.println("No operand left to apply this function to!");
         }
     }
 
@@ -87,24 +86,36 @@ public final class CalculatorEngine {
         }
 
         float[] operands = getOperands();
-        float result;
 
         if (operation == OperationType.DIVISION && operands[0] == 0.0f){
-            syserr.println("Division by zero!");
-            for(int i = 0; i < 2; i++){
-                stack.push(operands[1-i]); // Reinject operands into the stack!
-            }
+            System.err.println("Division by zero!");
+            reinjectOperandsIntoTheStack(operands);
             return;
         }
+
+        float result = computate(operation, operands);
+
+        stack.push(result);
+    }
+
+    private void reinjectOperandsIntoTheStack(float[] operands){
+        for(int i = 0; i < 2; i++){
+            stack.push(operands[1-i]);
+        }
+    }
+
+    private float computate(OperationType operation, float[] operands) throws CalculatorException {
+        float a = operands[0];
+        float b = operands[1];
+
         switch(operation){
-            case ADDITION: result = operands[1] + operands[0]; break;
-            case SUBSTRACTION: result = operands[1] - operands[0]; break;
-            case MULTIPLICATION: result = operands[1] * operands[0]; break;
-            case DIVISION: result = operands[1] / operands[0]; break;
-            case MODULO: result = operands[1] % operands[0]; break;
-            case POWER: result = (float) Math.pow(operands[1], operands[0]); break;
+            case ADDITION: return b + a;
+            case SUBSTRACTION: return b - a;
+            case MULTIPLICATION: return b * a;
+            case DIVISION: return b / a;
+            case MODULO: return b % a;
+            case POWER: return (float) Math.pow(b, a);
             default: throw new CalculatorException("The provided operation is not handled!");
         }
-        stack.push(result);
     }
 }
