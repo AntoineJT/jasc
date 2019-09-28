@@ -9,39 +9,35 @@ import com.github.antoinejt.jasc.util.TextFormatter;
 import java.util.*;
 
 final class ConsoleUI {
-    private static final List<String> commands = new ArrayList<>();
-    private static final Map<String, FunctionType> functions = new HashMap<>();
-    private static final Map<String, OperationType> operators = new HashMap<>();
-    static {
-        // TODO Refactor that
-        functions.put("sqrt", FunctionType.SQRT);
-        functions.put("log", FunctionType.LOG10);
-        functions.put("ln", FunctionType.LN);
-        functions.put("lb", FunctionType.LOGB);
-        functions.put("cos", FunctionType.COS);
-        functions.put("sin", FunctionType.SIN);
-        functions.put("tan", FunctionType.TAN);
-        functions.put("arccos", FunctionType.ARCCOS);
-        functions.put("arcsin", FunctionType.ARCSIN);
-        functions.put("arctan", FunctionType.ARCTAN);
-        functions.put("exp", FunctionType.EXP);
-
-        operators.put("+", OperationType.ADDITION);
-        operators.put("-", OperationType.SUBSTRACTION);
-        operators.put("*", OperationType.MULTIPLICATION);
-        operators.put("/", OperationType.DIVISION);
-        operators.put("%", OperationType.MODULO);
-        operators.put("^", OperationType.POWER);
-
-        commands.addAll(functions.keySet()); // functions are added here
-        commands.addAll(operators.keySet()); // operators are added here
-        commands.addAll(Arrays.asList(
-            "=", "help", "clear", "quit" // Commands
-        ));
-    }
+    private static final Map<String, FunctionType> functions = Collections.unmodifiableMap(new HashMap<String, FunctionType>() {{
+        put("sqrt", FunctionType.SQRT);
+        put("log", FunctionType.LOG10);
+        put("ln", FunctionType.LN);
+        put("lb", FunctionType.LOGB);
+        put("cos", FunctionType.COS);
+        put("sin", FunctionType.SIN);
+        put("tan", FunctionType.TAN);
+        put("arccos", FunctionType.ARCCOS);
+        put("arcsin", FunctionType.ARCSIN);
+        put("arctan", FunctionType.ARCTAN);
+        put("exp", FunctionType.EXP);
+    }});
+    private static final Map<String, OperationType> operators = Collections.unmodifiableMap(new HashMap<String, OperationType>() {{
+        put("+", OperationType.ADDITION);
+        put("-", OperationType.SUBSTRACTION);
+        put("*", OperationType.MULTIPLICATION);
+        put("/", OperationType.DIVISION);
+        put("%", OperationType.MODULO);
+        put("^", OperationType.POWER);
+    }});
+    private static final List<String> commands = Collections.unmodifiableList(new ArrayList<String>() {{
+        addAll(functions.keySet()); // functions are added here
+        addAll(operators.keySet()); // operators are added here
+        addAll(Arrays.asList("=", "help", "clear", "quit")); // Commands
+    }});
 
     // TODO Replace that by some txt templates
-    private static void displayHelp(){
+    private static void displayHelp() {
         TextFormatter.listThings("Available operators (acts on 2 operands) : ",
                 "+ : Addition operator",
                 "- : Substraction operator",
@@ -68,7 +64,7 @@ final class ConsoleUI {
                 "quit : Allows to quit").print();
     }
 
-    private static void displayIntro(){
+    private static void displayIntro() {
         TextFormatter.printLines(
                 "Just Another Stack Calculator",
                 "-------------------------------",
@@ -87,7 +83,7 @@ final class ConsoleUI {
         List stackContent = calculatorEngine.getNumbers();
         int stackContentSize = stackContent.size();
 
-        if (stackContentSize > 0){
+        if (stackContentSize > 0) {
             stackContent.forEach(System.out::println);
             return;
         }
@@ -101,44 +97,52 @@ final class ConsoleUI {
         Scanner scanner = new Scanner(System.in);
         String input;
 
-        while (true){
+        while (true) {
             input = scanner.next();
-            if (!commands.contains(input)){ // if it's a number
+            if (!commands.contains(input)) { // if it's a number
                 try {
                     float number = Float.parseFloat(input);
 
                     calculatorEngine.addNumber(number);
-                } catch(NumberFormatException unused){
+                } catch (NumberFormatException unused) {
                     System.err.println("Your input is invalid!");
                 }
-                return;
+                continue;
             }
-            if (operators.containsKey(input)){
+            if (operators.containsKey(input)) {
                 try {
                     OperationType operationType = operators.get(input);
 
                     calculatorEngine.operate(operationType);
-                } catch(OperandException unused){
+                } catch (OperandException unused) {
                     System.err.println("You need to specify at least 2 operands before you can make some calculation!");
                 }
-                return;
+                continue;
             }
 
             boolean isFunction = false;
 
-            switch(input){
-                case "=": printStackContent(calculatorEngine); break;
-                case "help": displayHelp(); break;
-                case "clear": calculatorEngine.clear(); break;
-                case "quit": System.exit(0);
-                default: isFunction = true;
+            switch (input) {
+                case "=":
+                    printStackContent(calculatorEngine);
+                    break;
+                case "help":
+                    displayHelp();
+                    break;
+                case "clear":
+                    calculatorEngine.clear();
+                    break;
+                case "quit":
+                    System.exit(0);
+                default:
+                    isFunction = true;
             }
-            if (isFunction){
+            if (isFunction) {
                 if (functions.containsKey(input)) {
                     FunctionType functionType = functions.get(input);
 
                     calculatorEngine.applyFunction(functionType);
-                    return;
+                    continue;
                 }
                 throw new Exception("This is not good to corrupt my list, hack3rm4n!");
             }
