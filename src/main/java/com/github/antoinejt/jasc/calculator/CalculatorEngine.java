@@ -101,6 +101,10 @@ public final class CalculatorEngine {
         }
     }
 
+    public void removeLastNumber(){
+        stack.pop();
+    }
+
     public void operate(OperationType operation) throws OperandException, CalculatorException {
         int stackSize = stack.getSize();
 

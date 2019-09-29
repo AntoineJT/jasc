@@ -33,7 +33,7 @@ final class ConsoleUI {
     private static final List<String> commands = Collections.unmodifiableList(new ArrayList<String>() {{
         addAll(functions.keySet()); // functions are added here
         addAll(operators.keySet()); // operators are added here
-        addAll(Arrays.asList("=", "help", "clear", "quit")); // Commands
+        addAll(Arrays.asList("=", "help", "clear", "pop", "quit")); // Commands
     }});
 
     // TODO Replace that by some txt templates (use of MVC
@@ -61,6 +61,7 @@ final class ConsoleUI {
                 "= : Print the content of the stack",
                 "help : Show the list of available commands",
                 "clear : Reset stack content",
+                "pop : Remove last number from the stack",
                 "quit : Allows to quit").print();
     }
 
@@ -132,6 +133,9 @@ final class ConsoleUI {
                     break;
                 case "clear":
                     calculatorEngine.clear();
+                    break;
+                case "pop":
+                    calculatorEngine.removeLastNumber();
                     break;
                 case "quit":
                     System.exit(0);
