@@ -1,8 +1,14 @@
-
 # IntelliJ useless stuff
 *.iml
 .idea/
 
 # Binaries
 *.class
-out/
+*.jar
+
+# Gradle stuff
+.gradle/
+build/
+
+# A folder I use to keep a copy of each build I provide
+versions/

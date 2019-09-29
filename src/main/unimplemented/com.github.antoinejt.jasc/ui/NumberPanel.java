@@ -1,4 +1,4 @@
-package com.github.antoinejt.jasc.tests.ui;
+package com.github.antoinejt.jasc.unimplemented.ui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,7 @@ class NumberPanel extends JPanel {
     }
 
     private JButton getDotButton(){
-        JButton button = new CalculatorButton(".");
+        JButton button = new CalculatorButton("");
         button.addActionListener(unused -> numberList.makeFloat());
         return button;
     }

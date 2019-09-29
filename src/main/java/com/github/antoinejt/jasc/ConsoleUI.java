@@ -36,7 +36,7 @@ final class ConsoleUI {
         addAll(Arrays.asList("=", "help", "clear", "quit")); // Commands
     }});
 
-    // TODO Replace that by some txt templates
+    // TODO Replace that by some txt templates (use of MVC
     private static void displayHelp() {
         TextFormatter.listThings("Available operators (acts on 2 operands) : ",
                 "+ : Addition operator",
@@ -90,6 +90,7 @@ final class ConsoleUI {
         System.err.println("Stack is empty!");
     }
 
+    // TODO Refactor it!
     static void useConsole() throws Exception {
         displayIntro();
 

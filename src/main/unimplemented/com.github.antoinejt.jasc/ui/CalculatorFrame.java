@@ -1,4 +1,4 @@
-package com.github.antoinejt.jasc.tests.ui;
+package com.github.antoinejt.jasc.unimplemented.ui;
 
 import javax.swing.*;
 

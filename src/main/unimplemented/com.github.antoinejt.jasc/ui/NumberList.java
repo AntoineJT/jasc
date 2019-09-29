@@ -1,4 +1,4 @@
-package com.github.antoinejt.jasc.tests.ui;
+package com.github.antoinejt.jasc.unimplemented.ui;
 
 import com.github.antoinejt.jasc.calculator.CalculatorException;
 
@@ -37,7 +37,7 @@ class NumberList { // TODO Maybe use Stack here instead of an ArrayList (bad ide
                 int i = 0;
                 for(Integer num : list){
                     if (dot_pos == i) {
-                        concat.append(".");
+                        concat.append("");
                     }
                     concat.append(num.intValue());
                     i++;
