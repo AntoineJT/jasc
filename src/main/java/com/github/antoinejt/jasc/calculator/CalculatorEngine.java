@@ -10,8 +10,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public final class CalculatorEngine {
-    private final Stack<Float> stack = new Stack<>();
-    private static final Map<FunctionType, Function<Float, Double>> computatingFunctions = Collections.unmodifiableMap(new HashMap<FunctionType, Function<Float, Double>>() {
+    private static final Map<FunctionType, Function<Float, Double>> computationFunctions = Collections.unmodifiableMap(new HashMap<FunctionType, Function<Float, Double>>() {
         {
             put(FunctionType.SQRT, Math::sqrt);
             put(FunctionType.LOG10, Math::log10);
@@ -48,6 +47,7 @@ public final class CalculatorEngine {
             return (float) Math.pow(b, a);
         }
     });
+    private final Stack<Float> stack = new Stack<>();
 
     public void addNumber(float number) {
         stack.push(number);
@@ -68,29 +68,6 @@ public final class CalculatorEngine {
         return stackContent;
     }
 
-    private float[] getOperands() {
-        float[] operands = new float[2];
-
-        for (int i = 0; i < 2; i++) {
-            operands[i] = stack.pop();
-        }
-        return operands;
-    }
-
-    private double getFunctionResult(FunctionType functionType) throws OperandException, CalculatorException {
-        int stackSize = stack.getSize();
-
-        if (stackSize > 0) {
-            float number = stack.pop();
-
-            if (!computatingFunctions.containsKey(functionType)){
-                throw new CalculatorException("The provided function is not handled!");
-            }
-            return computatingFunctions.get(functionType).apply(number);
-        }
-        throw new OperandException("Stack is empty!");
-    }
-
     public void applyFunction(FunctionType functionType) throws CalculatorException {
         try {
             float result = (float) getFunctionResult(functionType);
@@ -101,11 +78,25 @@ public final class CalculatorEngine {
         }
     }
 
-    public void removeLastNumber(){
+    private double getFunctionResult(FunctionType functionType) throws OperandException, CalculatorException {
+        int stackSize = stack.getSize();
+
+        if (stackSize > 0) {
+            float number = stack.pop();
+
+            if (!computationFunctions.containsKey(functionType)) {
+                throw new CalculatorException("The provided function is not handled!");
+            }
+            return computationFunctions.get(functionType).apply(number);
+        }
+        throw new OperandException("Stack is empty!");
+    }
+
+    public void removeLastNumber() {
         stack.pop();
     }
 
-    public void operate(OperationType operation) throws OperandException, CalculatorException {
+    public void applyOperation(OperationType operation) throws OperandException, CalculatorException {
         int stackSize = stack.getSize();
 
         if (stackSize < 2) {
@@ -120,19 +111,29 @@ public final class CalculatorEngine {
             return;
         }
 
-        float result = computate(operation, operands);
+        float result = getOperationResult(operation, operands);
 
         stack.push(result);
     }
 
+    private float[] getOperands() {
+        float[] operands = new float[2];
+
+        for (int i = 0; i < 2; i++) {
+            operands[i] = stack.pop();
+        }
+        return operands;
+    }
+
     private void reinjectOperandsIntoTheStack(float[] operands) {
-        // assert operands.length == 2;
+        assert operands.length == 2;
         for (int i = 0; i < 2; i++) {
             stack.push(operands[1 - i]);
         }
     }
 
-    private float computate(OperationType operation, float[] operands) throws CalculatorException {
+    private float getOperationResult(OperationType operation, float[] operands) throws CalculatorException {
+        assert operands.length >= 2;
         float a = operands[0];
         float b = operands[1];
 

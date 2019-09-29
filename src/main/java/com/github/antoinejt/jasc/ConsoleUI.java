@@ -115,7 +115,7 @@ final class ConsoleUI {
                 try {
                     OperationType operationType = operators.get(input);
 
-                    calculatorEngine.operate(operationType);
+                    calculatorEngine.applyOperation(operationType);
                 } catch (OperandException unused) {
                     System.err.println("You need to specify at least 2 operands before you can make some calculation!");
                 }
