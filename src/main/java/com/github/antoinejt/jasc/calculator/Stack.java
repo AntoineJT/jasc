@@ -5,24 +5,24 @@ import java.util.EmptyStackException;
 final class Stack<T> {
     private java.util.Stack<T> stack = new java.util.Stack<>();
 
-    T pop(){
+    T pop() {
         int stackSize = stack.size();
 
-        if (stackSize > 0){
+        if (stackSize > 0) {
             return stack.pop();
         }
         throw new EmptyStackException();
     }
 
-    void push(T item){
+    void push(T item) {
         stack.push(item);
     }
 
-    void clear(){
+    void clear() {
         stack = new java.util.Stack<>();
     }
 
-    int getSize(){
+    int getSize() {
         return stack.size();
     }
 }
