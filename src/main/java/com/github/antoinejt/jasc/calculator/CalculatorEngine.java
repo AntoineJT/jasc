@@ -7,32 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public final class CalculatorEngine {
-    private static final Map<FunctionType, Function<Float, Double>> computationFunctions = Collections.unmodifiableMap(new HashMap<FunctionType, Function<Float, Double>>() {
-        {
-            put(FunctionType.SQRT, Math::sqrt);
-            put(FunctionType.LOG10, Math::log10);
-            put(FunctionType.LN, Math::log);
-            put(FunctionType.LOGB, number -> (double) computeBinaryLog(number));
-            put(FunctionType.COS, Math::cos);
-            put(FunctionType.SIN, Math::sin);
-            put(FunctionType.TAN, Math::tan);
-            put(FunctionType.ARCCOS, Math::acos);
-            put(FunctionType.ARCSIN, Math::asin);
-            put(FunctionType.ARCTAN, Math::atan);
-            put(FunctionType.EXP, Math::exp);
-        }
-
-        private int computeBinaryLog(float number) {
-            // https://stackoverflow.com/questions/3305059/how-do-you-calculate-log-base-2-in-java-for-integers
-            double logNumber = Math.log(number);
-            double log2 = Math.log(2);
-
-            return (int) (logNumber / log2 + 1e-10);
-        }
-    });
     private static final Map<OperationType, BiFunction<Float, Float, Float>> operationFunctions = Collections.unmodifiableMap(new HashMap<OperationType, BiFunction<Float, Float, Float>>() {
         {
             put(OperationType.ADDITION, Float::sum);
@@ -68,7 +44,7 @@ public final class CalculatorEngine {
         return stackContent;
     }
 
-    public void applyFunction(FunctionType functionType) throws CalculatorException {
+    public void applyFunction(FunctionType functionType) {
         try {
             float result = (float) getFunctionResult(functionType);
 
@@ -78,18 +54,16 @@ public final class CalculatorEngine {
         }
     }
 
-    private double getFunctionResult(FunctionType functionType) throws OperandException, CalculatorException {
+    private double getFunctionResult(FunctionType functionType) throws OperandException {
         int stackSize = stack.getSize();
 
-        if (stackSize > 0) {
-            float number = stack.pop();
-
-            if (!computationFunctions.containsKey(functionType)) {
-                throw new CalculatorException("The provided function is not handled!");
-            }
-            return computationFunctions.get(functionType).apply(number);
+        if (stackSize == 0) {
+            throw new OperandException("Stack is empty!");
         }
-        throw new OperandException("Stack is empty!");
+
+        float number = stack.pop();
+
+        return functionType.apply(number);
     }
 
     public void removeLastNumber() {
