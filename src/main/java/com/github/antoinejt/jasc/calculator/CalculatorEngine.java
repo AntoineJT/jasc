@@ -2,27 +2,9 @@ package com.github.antoinejt.jasc.calculator;
 
 import com.github.antoinejt.jasc.util.ReflectUtil;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiFunction;
 
 public final class CalculatorEngine {
-    private static final Map<OperationType, BiFunction<Float, Float, Float>> operationFunctions = Collections.unmodifiableMap(new HashMap<OperationType, BiFunction<Float, Float, Float>>() {
-        {
-            put(OperationType.ADDITION, Float::sum);
-            put(OperationType.SUBSTRACTION, (a, b) -> b - a);
-            put(OperationType.MULTIPLICATION, (a, b) -> b * a);
-            put(OperationType.DIVISION, (a, b) -> b / a);
-            put(OperationType.MODULO, (a, b) -> b % a);
-            put(OperationType.POWER, this::pow);
-        }
-
-        private float pow(float a, float b) {
-            return (float) Math.pow(b, a);
-        }
-    });
     private final Stack<Float> stack = new Stack<>();
 
     public void addNumber(float number) {
@@ -70,7 +52,7 @@ public final class CalculatorEngine {
         stack.pop();
     }
 
-    public void applyOperation(OperationType operation) throws OperandException, CalculatorException {
+    public void applyOperation(OperationType operation) throws OperandException {
         int stackSize = stack.getSize();
 
         if (stackSize < 2) {
@@ -106,14 +88,11 @@ public final class CalculatorEngine {
         }
     }
 
-    private float getOperationResult(OperationType operation, float[] operands) throws CalculatorException {
+    private float getOperationResult(OperationType operation, float[] operands) {
         assert operands.length >= 2;
         float a = operands[0];
         float b = operands[1];
 
-        if (!operationFunctions.containsKey(operation)) {
-            throw new CalculatorException("The provided operation is not handled!");
-        }
-        return operationFunctions.get(operation).apply(a, b);
+        return operation.apply(a, b);
     }
 }
