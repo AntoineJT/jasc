@@ -12,7 +12,7 @@ public enum OperationType {
 
     private final BiFunction<Float, Float, Float> operation;
 
-    private OperationType(BiFunction<Float, Float, Float> operation) {
+    OperationType(BiFunction<Float, Float, Float> operation) {
         this.operation = operation;
     }
 

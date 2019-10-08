@@ -17,7 +17,7 @@ public enum FunctionType {
 
     private final Function<Float, Double> function;
 
-    private FunctionType(Function<Float, Double> function) {
+    FunctionType(Function<Float, Double> function) {
         this.function = function;
     }
 
