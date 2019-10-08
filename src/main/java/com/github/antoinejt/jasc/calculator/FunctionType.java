@@ -15,14 +15,10 @@ public enum FunctionType {
     ARCTAN(Math::atan),
     EXP(Math::exp);
 
-    private Function<Float, Double> function;
+    private final Function<Float, Double> function;
 
     private FunctionType(Function<Float, Double> function) {
         this.function = function;
-    }
-
-    public double apply(float number) {
-        return function.apply(number);
     }
 
     private static int computeBinaryLog(float number) {
@@ -31,5 +27,9 @@ public enum FunctionType {
         double log2 = Math.log(2);
 
         return (int) (logNumber / log2 + 1e-10);
+    }
+
+    public double apply(float number) {
+        return function.apply(number);
     }
 }
