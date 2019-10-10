@@ -2,7 +2,6 @@ package com.github.antoinejt.jasc;
 
 import com.github.antoinejt.jasc.calculator.CalculatorEngine;
 import com.github.antoinejt.jasc.calculator.FunctionType;
-import com.github.antoinejt.jasc.calculator.OperandException;
 import com.github.antoinejt.jasc.calculator.OperationType;
 import com.github.antoinejt.jasc.util.TextFormatter;
 
@@ -116,7 +115,7 @@ class ConsoleUI {
                     OperationType operationType = operators.get(input);
 
                     calculatorEngine.applyOperation(operationType);
-                } catch (OperandException unused) {
+                } catch (IllegalStateException unused) {
                     System.err.println("You need to specify at least 2 operands before you can make some calculation!");
                 }
                 continue;

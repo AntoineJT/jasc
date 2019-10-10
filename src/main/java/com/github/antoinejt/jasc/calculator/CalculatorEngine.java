@@ -23,16 +23,16 @@ public class CalculatorEngine {
             float result = (float) getFunctionResult(functionType);
 
             stack.push(result);
-        } catch (OperandException unused) {
+        } catch (IllegalStateException unused) {
             System.err.println("No operand left to apply this function to!");
         }
     }
 
-    private double getFunctionResult(FunctionType functionType) throws OperandException {
+    private double getFunctionResult(FunctionType functionType) throws IllegalStateException {
         int stackSize = stack.size();
 
         if (stackSize == 0) {
-            throw new OperandException("Stack is empty!");
+            throw new IllegalStateException("Stack is empty!");
         }
 
         float number = stack.pop();
@@ -44,11 +44,11 @@ public class CalculatorEngine {
         stack.pop();
     }
 
-    public void applyOperation(OperationType operation) throws OperandException {
+    public void applyOperation(OperationType operation) throws IllegalStateException {
         int stackSize = stack.size();
 
         if (stackSize < 2) {
-            throw new OperandException("Can't operate without at least 2 operands!");
+            throw new IllegalStateException("Can't operate without at least 2 operands!");
         }
 
         float[] operands = getOperands();
