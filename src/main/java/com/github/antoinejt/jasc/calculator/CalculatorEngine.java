@@ -1,7 +1,5 @@
 package com.github.antoinejt.jasc.calculator;
 
-import com.github.antoinejt.jasc.util.ReflectUtil;
-
 import java.util.List;
 import java.util.Stack;
 
@@ -17,13 +15,7 @@ public final class CalculatorEngine {
     }
 
     public List getNumbers() {
-        List stackContent = null;
-        try {
-            stackContent = (List) ReflectUtil.getPrivateField(stack, "stack");
-        } catch (IllegalAccessException | NoSuchFieldException exception) {
-            exception.printStackTrace();
-        }
-        return stackContent;
+        return stack;
     }
 
     public void applyFunction(FunctionType functionType) {
