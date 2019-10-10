@@ -3,21 +3,21 @@ package com.github.antoinejt.jasc.calculator;
 import com.github.antoinejt.jasc.util.ReflectUtil;
 
 import java.util.List;
+import java.util.Stack;
 
 public final class CalculatorEngine {
-    private final Stack<Float> stack = new Stack<>();
+    private Stack<Float> stack = new Stack<>(); // TODO MrMicky says that it's better to use Deque instead of Stack
 
     public void addNumber(float number) {
         stack.push(number);
     }
 
     public void clear() {
-        stack.clear();
+        stack = new Stack<>();
     }
 
     public List getNumbers() {
         List stackContent = null;
-
         try {
             stackContent = (List) ReflectUtil.getPrivateField(stack, "stack");
         } catch (IllegalAccessException | NoSuchFieldException exception) {
@@ -37,7 +37,7 @@ public final class CalculatorEngine {
     }
 
     private double getFunctionResult(FunctionType functionType) throws OperandException {
-        int stackSize = stack.getSize();
+        int stackSize = stack.size();
 
         if (stackSize == 0) {
             throw new OperandException("Stack is empty!");
@@ -53,7 +53,7 @@ public final class CalculatorEngine {
     }
 
     public void applyOperation(OperationType operation) throws OperandException {
-        int stackSize = stack.getSize();
+        int stackSize = stack.size();
 
         if (stackSize < 2) {
             throw new OperandException("Can't operate without at least 2 operands!");
