@@ -2,7 +2,7 @@ package com.github.antoinejt.jasc;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Enumeration;
+import java.util.Objects;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
@@ -10,19 +10,21 @@ public enum ManifestInfos {
     LAST_UPDATE("Last-Update"),
     VERSION("Version");
 
-    private String value;
+    private final String value;
 
     ManifestInfos(String name) {
         Attributes attributes = null;
         try {
-            Enumeration<URL> resources = getClass().getClassLoader().getResources("META-INF/MANIFEST.MF");
-            while (resources.hasMoreElements()) {
-                Manifest manifest = new Manifest(resources.nextElement().openStream());
-                attributes = manifest.getMainAttributes();
-            }
+            attributes = getAttributesFromManifest();
         } catch (IOException ignored) {
         }
-        value = attributes != null ? attributes.getValue(name) : null;
+        value = (attributes != null) ? attributes.getValue(name) : null;
+    }
+
+    private Attributes getAttributesFromManifest() throws IOException {
+        URL resource = getClass().getClassLoader().getResource("META-INF/MANIFEST.MF");
+        Manifest manifest = new Manifest(Objects.requireNonNull(resource, "MANIFEST.MF doesn't exists!").openStream());
+        return manifest.getMainAttributes();
     }
 
     @Override
