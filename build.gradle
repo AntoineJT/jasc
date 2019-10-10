@@ -7,11 +7,14 @@ plugins {
 
 group 'com.github.antoinejt'
 
+def lastUpdate = 'October 10th 2019'
+
 def majorVersionNumber = '0'
 def minorVersionNumber = '5'
 def patchVersionNumber = '0'
 
 def versionNumber = "${majorVersionNumber}.${minorVersionNumber}.${patchVersionNumber}"
+def internalVersionNumber = "${versionNumber}${versioning.info.branch != 'master' ? '-DEVELOP' : ''}"
 
 version "${versionNumber}-${versioning.info.full}"
 
@@ -22,6 +25,8 @@ jar {
         attributes(
                 'Main-Class': 'com.github.antoinejt.jasc.Main',
                 'Built-By': System.properties['user.name'],
+                'Last-Update': lastUpdate,
+                'Version': internalVersionNumber,
                 'Build-Timestamp': new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
                 'Build-Revision': versioning.info.commit,
                 'Created-By': "Gradle ${gradle.gradleVersion}",
