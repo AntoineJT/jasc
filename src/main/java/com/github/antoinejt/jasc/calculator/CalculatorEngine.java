@@ -3,7 +3,7 @@ package com.github.antoinejt.jasc.calculator;
 import java.util.List;
 import java.util.Stack;
 
-public final class CalculatorEngine {
+public class CalculatorEngine {
     private Stack<Float> stack = new Stack<>(); // TODO MrMicky says that it's better to use Deque instead of Stack
 
     public void addNumber(float number) {

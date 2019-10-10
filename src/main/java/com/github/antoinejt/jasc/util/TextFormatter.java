@@ -1,6 +1,6 @@
 package com.github.antoinejt.jasc.util;
 
-public final class TextFormatter {
+public class TextFormatter {
     public static final class FormattedText {
         private final String formattedText;
 

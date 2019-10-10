@@ -8,7 +8,7 @@ import com.github.antoinejt.jasc.util.TextFormatter;
 
 import java.util.*;
 
-final class ConsoleUI {
+class ConsoleUI {
     private static final Map<String, FunctionType> functions = Collections.unmodifiableMap(new HashMap<String, FunctionType>() {{
         put("sqrt", FunctionType.SQRT);
         put("log", FunctionType.LOG10);
