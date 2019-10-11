@@ -2,13 +2,12 @@ package com.github.antoinejt.jasc;
 
 import com.github.antoinejt.jasc.calculator.CalculatorEngine;
 import com.github.antoinejt.jasc.calculator.FunctionType;
-import com.github.antoinejt.jasc.calculator.OperandException;
 import com.github.antoinejt.jasc.calculator.OperationType;
 import com.github.antoinejt.jasc.util.TextFormatter;
 
 import java.util.*;
 
-final class ConsoleUI {
+class ConsoleUI {
     private static final Map<String, FunctionType> functions = Collections.unmodifiableMap(new HashMap<String, FunctionType>() {{
         put("sqrt", FunctionType.SQRT);
         put("log", FunctionType.LOG10);
@@ -72,8 +71,8 @@ final class ConsoleUI {
                 "Created by Antoine James Tournepiche",
                 "Repository link : https://github.com/AntoineJT/jasc",
                 "-----------------------------------------------------",
-                "Version : " + Constants.VERSION,
-                "Last update : " + Constants.LAST_UPDATE,
+                "Version : " + ManifestInfos.VERSION,
+                "Last update : " + ManifestInfos.LAST_UPDATE,
                 "--------------------------------",
                 "This calculator uses a stack, so you must define at least 2 numbers before using some calculation operator",
                 "You must type numbers with or without a dot, not a comma",
@@ -115,8 +114,8 @@ final class ConsoleUI {
                 try {
                     OperationType operationType = operators.get(input);
 
-                    calculatorEngine.operate(operationType);
-                } catch (OperandException unused) {
+                    calculatorEngine.applyOperation(operationType);
+                } catch (IllegalStateException unused) {
                     System.err.println("You need to specify at least 2 operands before you can make some calculation!");
                 }
                 continue;
