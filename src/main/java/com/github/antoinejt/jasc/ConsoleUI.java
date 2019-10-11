@@ -148,7 +148,7 @@ class ConsoleUI {
                     calculatorEngine.applyFunction(functionType);
                     continue;
                 }
-                throw new Exception("This is not good to corrupt my list, hack3rm4n!");
+                throw new UnsupportedOperationException("This is not good to corrupt my list, hack3rm4n!");
             }
         }
     }
