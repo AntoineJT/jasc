@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             ConsoleUI.useConsole();
-        } catch (Exception exception) {
+        } catch (UnsupportedOperationException exception) {
             exception.printStackTrace();
         }
     }

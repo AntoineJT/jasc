@@ -91,7 +91,7 @@ class ConsoleUI {
     }
 
     // TODO Refactor it!
-    static void useConsole() throws Exception {
+    static void useConsole() throws UnsupportedOperationException {
         displayIntro();
 
         CalculatorEngine calculatorEngine = new CalculatorEngine();
