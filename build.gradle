@@ -7,7 +7,7 @@ plugins {
 
 group 'com.github.antoinejt'
 
-def lastUpdate = 'October 12th 2019'
+def lastUpdate = 'October 17th 2019'
 
 def majorVersionNumber = '0'
 def minorVersionNumber = '5'

@@ -11,28 +11,26 @@ public enum ManifestInfos {
     LAST_UPDATE("Last-Update"),
     VERSION("Version");
 
-    private final String value;
+    private static Attributes attributes = null;
 
-    ManifestInfos(String name) {
-        Attributes attributes = null;
+    static {
+        URL resource = ManifestInfos.class.getClassLoader().getResource("META-INF/MANIFEST.MF");
         try {
-            attributes = getAttributesFromManifest();
+            InputStream inputStream = Objects.requireNonNull(resource, "MANIFEST.MF doesn't exists!").openStream();
+            Manifest manifest = new Manifest(inputStream);
+            ManifestInfos.attributes = manifest.getMainAttributes();
         } catch (IOException ignored) {
         }
-        value = (attributes != null) ? attributes.getValue(name) : null;
     }
 
-    // TODO Can improve performance by making this static (load MANIFEST.MF just once is better than loading it everytime)
-    private Attributes getAttributesFromManifest() throws IOException {
-        URL resource = getClass().getClassLoader().getResource("META-INF/MANIFEST.MF");
-        InputStream inputStream = Objects.requireNonNull(resource, "MANIFEST.MF doesn't exists!").openStream();
-        Manifest manifest = new Manifest(inputStream);
+    private final String valueName;
 
-        return manifest.getMainAttributes();
+    ManifestInfos(String valueName) {
+        this.valueName = valueName;
     }
 
     @Override
     public String toString() {
-        return value;
+        return ManifestInfos.attributes.getValue(valueName);
     }
 }
