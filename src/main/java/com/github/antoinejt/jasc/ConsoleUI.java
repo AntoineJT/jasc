@@ -87,6 +87,7 @@ class ConsoleUI {
         System.err.println("Stack is empty!");
     }
 
+    @SuppressWarnings("InfiniteRecursion")
     private static void inputLoop(CalculatorEngine calculatorEngine, Scanner scanner) {
         String input = scanner.next();
 
