@@ -8,7 +8,7 @@ import com.github.antoinejt.jasc.util.TextFormatter;
 import java.util.*;
 
 class ConsoleUI {
-    private static final Map<String, FunctionType> functions = Collections.unmodifiableMap(new HashMap<String, FunctionType>() {{
+    private static final Map<String, FunctionType> functions = new HashMap<String, FunctionType>() {{
         put("sqrt", FunctionType.SQRT);
         put("log", FunctionType.LOG10);
         put("ln", FunctionType.LN);
@@ -20,22 +20,20 @@ class ConsoleUI {
         put("arcsin", FunctionType.ARCSIN);
         put("arctan", FunctionType.ARCTAN);
         put("exp", FunctionType.EXP);
-    }});
-    private static final Map<String, OperationType> operators = Collections.unmodifiableMap(new HashMap<String, OperationType>() {{
+    }};
+    private static final Map<String, OperationType> operators = new HashMap<String, OperationType>() {{
         put("+", OperationType.ADDITION);
         put("-", OperationType.SUBSTRACTION);
         put("*", OperationType.MULTIPLICATION);
         put("/", OperationType.DIVISION);
         put("%", OperationType.MODULO);
         put("^", OperationType.POWER);
-    }});
-    private static final List<String> commands = Collections.unmodifiableList(new ArrayList<String>() {{
-        addAll(functions.keySet()); // functions are added here
-        addAll(operators.keySet()); // operators are added here
-        addAll(Arrays.asList("=", "help", "clear", "pop", "quit")); // Commands
-    }});
+    }};
+    private static final List<String> commands = new ArrayList<>(
+            Arrays.asList("=", "help", "clear", "pop", "quit")
+    );
 
-    // TODO Replace that by some txt templates (use of MVC
+    // TODO Replace that by some txt templates (use of MVC)
     private static void displayHelp() {
         TextFormatter.listThings("Available operators (acts on 2 operands) : ",
                 "+ : Addition operator",
@@ -81,75 +79,78 @@ class ConsoleUI {
 
     private static void printStackContent(CalculatorEngine calculatorEngine) {
         List stackContent = calculatorEngine.getNumbers();
-        int stackContentSize = stackContent.size();
 
-        if (stackContentSize > 0) {
+        if (stackContent.size() > 0) {
             stackContent.forEach(System.out::println);
             return;
         }
         System.err.println("Stack is empty!");
     }
 
-    // TODO Refactor it!
+    private static void inputLoop(CalculatorEngine calculatorEngine, Scanner scanner) {
+        String input = scanner.next();
+
+        if (operators.containsKey(input)) {
+            tryToApplyOperation(calculatorEngine, input);
+            inputLoop(calculatorEngine, scanner);
+        }
+        if (functions.containsKey(input)) {
+            FunctionType functionType = functions.get(input);
+            calculatorEngine.applyFunction(functionType);
+            inputLoop(calculatorEngine, scanner);
+        }
+        if (commands.contains(input)) {
+            executeCommand(calculatorEngine, input);
+            inputLoop(calculatorEngine, scanner);
+        }
+
+        tryToAddNumberToTheStack(calculatorEngine, input);
+        inputLoop(calculatorEngine, scanner);
+    }
+
+    private static void executeCommand(CalculatorEngine calculatorEngine, String input) {
+        switch (input) {
+            case "=":
+                printStackContent(calculatorEngine);
+                break;
+            case "help":
+                displayHelp();
+                break;
+            case "clear":
+                calculatorEngine.clear();
+                break;
+            case "pop":
+                calculatorEngine.removeLastNumber();
+                break;
+            case "quit":
+                System.exit(0);
+        }
+    }
+
+    private static void tryToApplyOperation(CalculatorEngine calculatorEngine, String input) {
+        try {
+            OperationType operationType = operators.get(input);
+            calculatorEngine.applyOperation(operationType);
+        } catch (IllegalStateException unused) {
+            System.err.println("You need to specify at least 2 operands before you can make some calculation!");
+        }
+    }
+
+    private static void tryToAddNumberToTheStack(CalculatorEngine calculatorEngine, String input) {
+        try {
+            float number = Float.parseFloat(input);
+            calculatorEngine.addNumber(number);
+        } catch (NumberFormatException unused) {
+            System.err.println("Your input is invalid!");
+        }
+    }
+
     static void useConsole() throws UnsupportedOperationException {
         displayIntro();
 
         CalculatorEngine calculatorEngine = new CalculatorEngine();
         Scanner scanner = new Scanner(System.in);
-        String input;
 
-        while (true) {
-            input = scanner.next();
-            if (!commands.contains(input)) { // if it's a number
-                try {
-                    float number = Float.parseFloat(input);
-
-                    calculatorEngine.addNumber(number);
-                } catch (NumberFormatException unused) {
-                    System.err.println("Your input is invalid!");
-                }
-                continue;
-            }
-            if (operators.containsKey(input)) {
-                try {
-                    OperationType operationType = operators.get(input);
-
-                    calculatorEngine.applyOperation(operationType);
-                } catch (IllegalStateException unused) {
-                    System.err.println("You need to specify at least 2 operands before you can make some calculation!");
-                }
-                continue;
-            }
-
-            boolean isFunction = false;
-
-            switch (input) {
-                case "=":
-                    printStackContent(calculatorEngine);
-                    break;
-                case "help":
-                    displayHelp();
-                    break;
-                case "clear":
-                    calculatorEngine.clear();
-                    break;
-                case "pop":
-                    calculatorEngine.removeLastNumber();
-                    break;
-                case "quit":
-                    System.exit(0);
-                default:
-                    isFunction = true;
-            }
-            if (isFunction) {
-                if (functions.containsKey(input)) {
-                    FunctionType functionType = functions.get(input);
-
-                    calculatorEngine.applyFunction(functionType);
-                    continue;
-                }
-                throw new UnsupportedOperationException("This is not good to corrupt my list, hack3rm4n!");
-            }
-        }
+        inputLoop(calculatorEngine, scanner);
     }
 }

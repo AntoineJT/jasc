@@ -13,6 +13,7 @@ public enum ManifestInfos {
 
     private static Attributes attributes = null;
 
+    // Load manifest attributes just once
     static {
         URL resource = ManifestInfos.class.getClassLoader().getResource("META-INF/MANIFEST.MF");
         try {
