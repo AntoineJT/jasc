@@ -114,26 +114,22 @@ class ConsoleUI {
         System.err.println("Stack is empty!");
     }
 
-    @SuppressWarnings("InfiniteRecursion")
-    private static void inputLoop(CalculatorEngine calculatorEngine, Scanner scanner) {
-        String input = scanner.next();
-
+    private static void parseInput(CalculatorEngine calculatorEngine, String input) {
         if (operators.containsKey(input)) {
             tryToApplyOperation(calculatorEngine, input);
-            inputLoop(calculatorEngine, scanner);
+            return;
         }
         if (functions.containsKey(input)) {
             FunctionType functionType = functions.get(input);
             calculatorEngine.applyFunction(functionType);
-            inputLoop(calculatorEngine, scanner);
+            return;
         }
         if (commands.contains(input)) {
             executeCommand(calculatorEngine, input);
-            inputLoop(calculatorEngine, scanner);
+            return;
         }
 
         tryToAddNumberToTheStack(calculatorEngine, input);
-        inputLoop(calculatorEngine, scanner);
     }
 
     private static void executeCommand(CalculatorEngine calculatorEngine, String input) {
@@ -173,12 +169,16 @@ class ConsoleUI {
         }
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     static void useConsole() throws UnsupportedOperationException {
         displayIntro();
 
         CalculatorEngine calculatorEngine = new CalculatorEngine();
         Scanner scanner = new Scanner(System.in);
 
-        inputLoop(calculatorEngine, scanner);
+        while (true) {
+            String input = scanner.next();
+            parseInput(calculatorEngine, input);
+        }
     }
 }
