@@ -48,7 +48,6 @@ public class CalculatorEngine {
     public void applyFunction(FunctionType functionType) {
         try {
             float result = (float) getFunctionResult(functionType);
-
             stack.push(result);
         } catch (IllegalStateException unused) {
             System.err.println("No operand left to apply this function to!");
@@ -56,14 +55,11 @@ public class CalculatorEngine {
     }
 
     private double getFunctionResult(FunctionType functionType) throws IllegalStateException {
-        int stackSize = stack.size();
-
-        if (stackSize == 0) {
+        if (stack.size() == 0) {
             throw new IllegalStateException("Stack is empty!");
         }
 
         float number = stack.pop();
-
         return functionType.apply(number);
     }
 
@@ -72,9 +68,7 @@ public class CalculatorEngine {
     }
 
     public void applyOperation(OperationType operation) throws IllegalStateException {
-        int stackSize = stack.size();
-
-        if (stackSize < 2) {
+        if (stack.size() < 2) {
             throw new IllegalStateException("Can't operate without at least 2 operands!");
         }
 
@@ -87,7 +81,6 @@ public class CalculatorEngine {
         }
 
         float result = getOperationResult(operation, operands);
-
         stack.push(result);
     }
 
