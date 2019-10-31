@@ -58,18 +58,14 @@ import java.util.HashMap;
 
 // TODO Write javadoc for it and put it into code repository
 public class HashMapBuilder<K, V> {
-    private HashMap<K, V> map;
+    private final HashMap<K, V> map = new HashMap<>();
 
-    public HashMapBuilder() {
-        map = new HashMap<>();
-    }
-
-    public HashMapBuilder put(K key, V value) {
+    public HashMapBuilder<K, V> put(K key, V value) {
         map.put(key, value);
         return this;
     }
 
-    public HashMap build() {
+    public HashMap<K, V> build() {
         return map;
     }
 }
