@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-/*
+/**
  * MIT License
  *
  * Copyright (c) 2019 Antoine James Tournepiche

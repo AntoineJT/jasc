@@ -1,6 +1,6 @@
 package com.github.antoinejt.jasc.util;
 
-/*
+/**
  * MIT License
  *
  * Copyright (c) 2019 Antoine James Tournepiche

@@ -7,7 +7,7 @@ import com.github.antoinejt.jasc.util.TextFormatter;
 
 import java.util.*;
 
-/*
+/**
  * MIT License
  *
  * Copyright (c) 2019 Antoine James Tournepiche

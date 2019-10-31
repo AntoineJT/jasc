@@ -2,7 +2,7 @@ package com.github.antoinejt.jasc.calculator;
 
 import java.util.function.BiFunction;
 
-/*
+/**
  * MIT License
  *
  * Copyright (c) 2019 Antoine James Tournepiche

@@ -3,7 +3,7 @@ package com.github.antoinejt.jasc.calculator;
 import java.util.List;
 import java.util.Stack;
 
-/*
+/**
  * MIT License
  *
  * Copyright (c) 2019 Antoine James Tournepiche
