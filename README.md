@@ -24,6 +24,12 @@ Licensed under the [MIT License](https://github.com/AntoineJT/jasc/blob/master/L
 This software is provided with the MIT License which means that you need to credit me for my work if you use this, if it's a modified version or not.
 If you modify my software and share it, you must credit me as the author of the original software, put the github webpage of the original software, and credit you as the author of the derivated work based on it.
 
+## Credits
+
+This repository follows :
+- [Semantic Versioning](https://semver.org/)
+- [gitmoji](https://gitmoji.carloscuesta.me/)
+
 ## How to thank me for my work
 
 Just :
