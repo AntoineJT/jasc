@@ -3,6 +3,7 @@ package com.github.antoinejt.jasc;
 import com.github.antoinejt.jasc.calculator.CalculatorEngine;
 import com.github.antoinejt.jasc.calculator.FunctionType;
 import com.github.antoinejt.jasc.calculator.OperationType;
+import com.github.antoinejt.jasc.util.HashMapBuilder;
 import com.github.antoinejt.jasc.util.TextFormatter;
 
 import java.util.*;
@@ -35,27 +36,25 @@ import java.util.*;
  */
 
 class ConsoleUI {
-    private static final Map<String, FunctionType> functions = new HashMap<String, FunctionType>() {{
-        put("sqrt", FunctionType.SQRT);
-        put("log", FunctionType.LOG10);
-        put("ln", FunctionType.LN);
-        put("lb", FunctionType.LOGB);
-        put("cos", FunctionType.COS);
-        put("sin", FunctionType.SIN);
-        put("tan", FunctionType.TAN);
-        put("arccos", FunctionType.ARCCOS);
-        put("arcsin", FunctionType.ARCSIN);
-        put("arctan", FunctionType.ARCTAN);
-        put("exp", FunctionType.EXP);
-    }};
-    private static final Map<String, OperationType> operators = new HashMap<String, OperationType>() {{
-        put("+", OperationType.ADDITION);
-        put("-", OperationType.SUBSTRACTION);
-        put("*", OperationType.MULTIPLICATION);
-        put("/", OperationType.DIVISION);
-        put("%", OperationType.MODULO);
-        put("^", OperationType.POWER);
-    }};
+    private static Map<String, FunctionType> functions = new HashMapBuilder<String, FunctionType>()
+            .put("sqrt", FunctionType.SQRT)
+            .put("log", FunctionType.LOG10)
+            .put("ln", FunctionType.LN)
+            .put("lb", FunctionType.LOGB)
+            .put("cos", FunctionType.COS)
+            .put("sin", FunctionType.SIN)
+            .put("tan", FunctionType.TAN)
+            .put("arccos", FunctionType.ARCCOS)
+            .put("arcsin", FunctionType.ARCSIN)
+            .put("arctan", FunctionType.ARCTAN)
+            .put("exp", FunctionType.EXP).build();
+    private static Map<String, OperationType> operators = new HashMapBuilder<String, OperationType>()
+            .put("+", OperationType.ADDITION)
+            .put("-", OperationType.SUBSTRACTION)
+            .put("*", OperationType.MULTIPLICATION)
+            .put("/", OperationType.DIVISION)
+            .put("%", OperationType.MODULO)
+            .put("^", OperationType.POWER).build();
     private static final List<String> commands = new ArrayList<>(
             Arrays.asList("=", "help", "clear", "pop", "quit")
     );
