@@ -7,7 +7,7 @@ plugins {
 
 group 'com.github.antoinejt'
 
-def lastUpdate = 'October 31th 2019'
+def lastUpdate = 'November 1st 2019'
 
 def majorVersionNumber = '0'
 def minorVersionNumber = '5'
@@ -17,6 +17,8 @@ def versionNumber = "${majorVersionNumber}.${minorVersionNumber}.${patchVersionN
 def internalVersionNumber = "${versionNumber}${versioning.info.branch != 'master' ? '-DEVELOP' : ''}"
 
 version "${versionNumber}-${versioning.info.full}"
+
+def runScript = "java -jar ${jar.baseName}-${rootProject.version}.jar"
 
 sourceCompatibility = 1.8
 
@@ -33,6 +35,11 @@ jar {
                 'Build-Jdk': "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
                 'Build-OS': "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
         )
+    }
+
+    doLast {
+        new File('build/libs', 'run.bat').text = runScript
+        new File('build/libs', 'run.sh').text = runScript
     }
 }
 
