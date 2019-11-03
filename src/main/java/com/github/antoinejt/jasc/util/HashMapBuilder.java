@@ -1,8 +1,4 @@
-package com.github.antoinejt.jasc.util;
-
-import java.util.HashMap;
-
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2019 Antoine James Tournepiche
@@ -28,6 +24,10 @@ import java.util.HashMap;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+package com.github.antoinejt.jasc.util;
+
+import java.util.HashMap;
 
 // TODO Write javadoc for it and put it into code repository
 public class HashMapBuilder<K, V> {

@@ -1,8 +1,4 @@
-package com.github.antoinejt.jasc.calculator;
-
-import java.util.function.Function;
-
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2019 Antoine James Tournepiche
@@ -28,6 +24,10 @@ import java.util.function.Function;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+package com.github.antoinejt.jasc.calculator;
+
+import java.util.function.Function;
 
 public enum FunctionType {
     SQRT(Math::sqrt),

@@ -1,6 +1,4 @@
-package com.github.antoinejt.jasc;
-
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2019 Antoine James Tournepiche
@@ -26,6 +24,8 @@ package com.github.antoinejt.jasc;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+package com.github.antoinejt.jasc;
 
 public class Main {
     public static void main(String[] args) {

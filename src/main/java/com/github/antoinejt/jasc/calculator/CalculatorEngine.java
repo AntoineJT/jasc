@@ -1,9 +1,4 @@
-package com.github.antoinejt.jasc.calculator;
-
-import java.util.List;
-import java.util.Stack;
-
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2019 Antoine James Tournepiche
@@ -29,6 +24,11 @@ import java.util.Stack;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+package com.github.antoinejt.jasc.calculator;
+
+import java.util.List;
+import java.util.Stack;
 
 public class CalculatorEngine {
     private Stack<Float> stack = new Stack<>(); // TODO MrMicky says that it's better to use Deque instead of Stack

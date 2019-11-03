@@ -1,14 +1,4 @@
-package com.github.antoinejt.jasc;
-
-import com.github.antoinejt.jasc.calculator.CalculatorEngine;
-import com.github.antoinejt.jasc.calculator.FunctionType;
-import com.github.antoinejt.jasc.calculator.OperationType;
-import com.github.antoinejt.jasc.util.HashMapBuilder;
-import com.github.antoinejt.jasc.util.TextFormatter;
-
-import java.util.*;
-
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2019 Antoine James Tournepiche
@@ -34,6 +24,16 @@ import java.util.*;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+package com.github.antoinejt.jasc;
+
+import com.github.antoinejt.jasc.calculator.CalculatorEngine;
+import com.github.antoinejt.jasc.calculator.FunctionType;
+import com.github.antoinejt.jasc.calculator.OperationType;
+import com.github.antoinejt.jasc.util.HashMapBuilder;
+import com.github.antoinejt.jasc.util.TextFormatter;
+
+import java.util.*;
 
 class ConsoleUI {
     private static Map<String, FunctionType> functions = new HashMapBuilder<String, FunctionType>()

@@ -1,8 +1,4 @@
-package com.github.antoinejt.jasc.calculator;
-
-import java.util.function.BiFunction;
-
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2019 Antoine James Tournepiche
@@ -28,6 +24,10 @@ import java.util.function.BiFunction;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+package com.github.antoinejt.jasc.calculator;
+
+import java.util.function.BiFunction;
 
 public enum OperationType {
     ADDITION(Float::sum),

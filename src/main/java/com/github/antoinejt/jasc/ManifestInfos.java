@@ -1,13 +1,4 @@
-package com.github.antoinejt.jasc;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Objects;
-import java.util.jar.Attributes;
-import java.util.jar.Manifest;
-
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2019 Antoine James Tournepiche
@@ -33,6 +24,15 @@ import java.util.jar.Manifest;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+package com.github.antoinejt.jasc;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Objects;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 public enum ManifestInfos {
     LAST_UPDATE("Last-Update"),
