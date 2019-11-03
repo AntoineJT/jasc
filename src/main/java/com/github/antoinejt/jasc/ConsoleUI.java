@@ -55,7 +55,7 @@ class ConsoleUI {
             .put("/", OperationType.DIVISION)
             .put("%", OperationType.MODULO)
             .put("^", OperationType.POWER).build();
-    private static final List<String> commands = new ArrayList<>(
+    private static final Set<String> commands = new HashSet<>(
             Arrays.asList("=", "help", "clear", "pop", "quit")
     );
 

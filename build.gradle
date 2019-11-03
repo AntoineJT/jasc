@@ -7,11 +7,11 @@ plugins {
 
 group 'com.github.antoinejt'
 
-def lastUpdate = 'November 1st 2019'
+def lastUpdate = 'November 3rd 2019'
 
 def majorVersionNumber = '0'
-def minorVersionNumber = '5'
-def patchVersionNumber = '1'
+def minorVersionNumber = '6'
+def patchVersionNumber = '0'
 
 def versionNumber = "${majorVersionNumber}.${minorVersionNumber}.${patchVersionNumber}"
 def internalVersionNumber = "${versionNumber}${versioning.info.branch != 'master' ? '-DEVELOP' : ''}"
