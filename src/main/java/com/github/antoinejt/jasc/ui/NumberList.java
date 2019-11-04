@@ -1,7 +1,5 @@
 package com.github.antoinejt.jasc.ui;
 
-import com.github.antoinejt.jasc.calculator.CalculatorException;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,7 @@ class NumberList { // TODO Maybe use Stack here instead of an ArrayList (bad ide
         dot_pos = list.size();
     }
 
-    public float getNumber() throws CalculatorException {
+    public float getNumber() throws IllegalStateException {
         if (list.size() != 0) {
             float number;
             if (dot_pos == -1){
@@ -48,7 +46,7 @@ class NumberList { // TODO Maybe use Stack here instead of an ArrayList (bad ide
             return number;
         } else {
             JOptionPane.showInternalMessageDialog(parent, "You don't have enter any number, so it's impossible to calculate!", "Number stack is empty!", JOptionPane.WARNING_MESSAGE);
-            throw new CalculatorException("Empty number set!");
+            throw new IllegalStateException("Empty number set!");
         }
     }
 

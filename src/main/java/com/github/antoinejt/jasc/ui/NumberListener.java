@@ -1,7 +1,5 @@
 package com.github.antoinejt.jasc.ui;
 
-import com.github.antoinejt.jasc.calculator.CalculatorException;
-
 import java.awt.event.ActionListener;
 
 class NumberListener {
@@ -16,9 +14,7 @@ class NumberListener {
     ActionListener getActionListener(int number){
         return unused -> {
             numberList.addNumber(number);
-            try {
-                parent.getResultPane().setResult(String.valueOf(numberList.getNumber()));
-            } catch (CalculatorException ignored) {}
+            parent.getResultPane().setResult(String.valueOf(numberList.getNumber()));
         };
     }
 }
