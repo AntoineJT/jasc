@@ -18,7 +18,8 @@ def internalVersionNumber = "${versionNumber}${versioning.info.branch != 'master
 
 version "${versionNumber}-${versioning.info.full}"
 
-def runScript = "java -jar ${jar.baseName}-${rootProject.version}.jar"
+def jarName = "${jar.baseName}-${rootProject.version}.jar"
+def runScript = "java -jar ${jarName}"
 
 sourceCompatibility = 1.8
 
@@ -41,6 +42,10 @@ jar {
         new File('build/libs', 'run.bat').text = runScript
         new File('build/libs', 'run.sh').text = runScript
     }
+}
+
+task run(dependsOn: ':build', type: Exec) {
+    commandLine 'java', '-jar', "build/libs/${jarName}"
 }
 
 repositories {
