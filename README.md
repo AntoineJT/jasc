@@ -10,6 +10,8 @@ The purpose is to create a calculator using a stack to make calculation and prov
 
 To use it properly, just use the help command.
 
+**N.B.** : *At the time, this project is a showcase to present my skills.*
+
 ## ✍️ Modifying this software
 
 If you want to modify my software, please fork it. It will show me that this is useful and not a random project on my GitHub account.
