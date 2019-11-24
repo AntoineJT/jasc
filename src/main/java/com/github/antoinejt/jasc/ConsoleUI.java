@@ -1,41 +1,65 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2019 Antoine James Tournepiche
+ *
+ * This source file come from Just another Stack Calculator
+ * Repository : https://github.com/AntoineJT/jasc
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.github.antoinejt.jasc;
 
 import com.github.antoinejt.jasc.calculator.CalculatorEngine;
 import com.github.antoinejt.jasc.calculator.FunctionType;
 import com.github.antoinejt.jasc.calculator.OperationType;
+import com.github.antoinejt.jasc.util.HashMapBuilder;
 import com.github.antoinejt.jasc.util.TextFormatter;
 
 import java.util.*;
 
 class ConsoleUI {
-    private static final Map<String, FunctionType> functions = Collections.unmodifiableMap(new HashMap<String, FunctionType>() {{
-        put("sqrt", FunctionType.SQRT);
-        put("log", FunctionType.LOG10);
-        put("ln", FunctionType.LN);
-        put("lb", FunctionType.LOGB);
-        put("cos", FunctionType.COS);
-        put("sin", FunctionType.SIN);
-        put("tan", FunctionType.TAN);
-        put("arccos", FunctionType.ARCCOS);
-        put("arcsin", FunctionType.ARCSIN);
-        put("arctan", FunctionType.ARCTAN);
-        put("exp", FunctionType.EXP);
-    }});
-    private static final Map<String, OperationType> operators = Collections.unmodifiableMap(new HashMap<String, OperationType>() {{
-        put("+", OperationType.ADDITION);
-        put("-", OperationType.SUBSTRACTION);
-        put("*", OperationType.MULTIPLICATION);
-        put("/", OperationType.DIVISION);
-        put("%", OperationType.MODULO);
-        put("^", OperationType.POWER);
-    }});
-    private static final List<String> commands = Collections.unmodifiableList(new ArrayList<String>() {{
-        addAll(functions.keySet()); // functions are added here
-        addAll(operators.keySet()); // operators are added here
-        addAll(Arrays.asList("=", "help", "clear", "pop", "quit")); // Commands
-    }});
+    private static Map<String, FunctionType> functions = new HashMapBuilder<String, FunctionType>()
+            .put("sqrt", FunctionType.SQRT)
+            .put("log", FunctionType.LOG10)
+            .put("ln", FunctionType.LN)
+            .put("lb", FunctionType.LOGB)
+            .put("cos", FunctionType.COS)
+            .put("sin", FunctionType.SIN)
+            .put("tan", FunctionType.TAN)
+            .put("arccos", FunctionType.ARCCOS)
+            .put("arcsin", FunctionType.ARCSIN)
+            .put("arctan", FunctionType.ARCTAN)
+            .put("exp", FunctionType.EXP).build();
+    private static Map<String, OperationType> operators = new HashMapBuilder<String, OperationType>()
+            .put("+", OperationType.ADDITION)
+            .put("-", OperationType.SUBSTRACTION)
+            .put("*", OperationType.MULTIPLICATION)
+            .put("/", OperationType.DIVISION)
+            .put("%", OperationType.MODULO)
+            .put("^", OperationType.POWER).build();
+    private static final Set<String> commands = new HashSet<>(
+            Arrays.asList("=", "help", "clear", "pop", "quit")
+    );
 
-    // TODO Replace that by some txt templates (use of MVC
+    // TODO Replace that by some txt templates (use of MVC)
     private static void displayHelp() {
         TextFormatter.listThings("Available operators (acts on 2 operands) : ",
                 "+ : Addition operator",
@@ -81,75 +105,81 @@ class ConsoleUI {
 
     private static void printStackContent(CalculatorEngine calculatorEngine) {
         List stackContent = calculatorEngine.getNumbers();
-        int stackContentSize = stackContent.size();
 
-        if (stackContentSize > 0) {
+        if (stackContent.size() > 0) {
             stackContent.forEach(System.out::println);
             return;
         }
         System.err.println("Stack is empty!");
     }
 
-    // TODO Refactor it!
-    static void useConsole() throws Exception {
+    private static void parseInput(CalculatorEngine calculatorEngine, String input) {
+        if (operators.containsKey(input)) {
+            tryToApplyOperation(calculatorEngine, input);
+            return;
+        }
+        if (functions.containsKey(input)) {
+            FunctionType functionType = functions.get(input);
+            calculatorEngine.applyFunction(functionType);
+            return;
+        }
+        if (commands.contains(input)) {
+            executeCommand(calculatorEngine, input);
+            return;
+        }
+
+        tryToAddNumberToTheStack(calculatorEngine, input);
+    }
+
+    private static void executeCommand(CalculatorEngine calculatorEngine, String input) {
+        switch (input) {
+            case "=":
+                printStackContent(calculatorEngine);
+                break;
+            case "help":
+                displayHelp();
+                break;
+            case "clear":
+                calculatorEngine.clear();
+                break;
+            case "pop":
+                calculatorEngine.removeLastNumber();
+                break;
+            case "quit":
+                System.exit(0);
+                break;
+            default: break;
+        }
+    }
+
+    private static void tryToApplyOperation(CalculatorEngine calculatorEngine, String input) {
+        try {
+            OperationType operationType = operators.get(input);
+            calculatorEngine.applyOperation(operationType);
+        } catch (IllegalStateException unused) {
+            System.err.println("You need to specify at least 2 operands before you can make some calculation!");
+        }
+    }
+
+    private static void tryToAddNumberToTheStack(CalculatorEngine calculatorEngine, String input) {
+        try {
+            float number = Float.parseFloat(input);
+            calculatorEngine.addNumber(number);
+        } catch (NumberFormatException unused) {
+            System.err.println("Your input is invalid!");
+        }
+    }
+
+    @SuppressWarnings({"InfiniteLoopStatement", "WeakerAccess"})
+    public static void useConsole() throws UnsupportedOperationException {
         displayIntro();
 
         CalculatorEngine calculatorEngine = new CalculatorEngine();
         Scanner scanner = new Scanner(System.in);
-        String input;
 
         while (true) {
-            input = scanner.next();
-            if (!commands.contains(input)) { // if it's a number
-                try {
-                    float number = Float.parseFloat(input);
-
-                    calculatorEngine.addNumber(number);
-                } catch (NumberFormatException unused) {
-                    System.err.println("Your input is invalid!");
-                }
-                continue;
-            }
-            if (operators.containsKey(input)) {
-                try {
-                    OperationType operationType = operators.get(input);
-
-                    calculatorEngine.applyOperation(operationType);
-                } catch (IllegalStateException unused) {
-                    System.err.println("You need to specify at least 2 operands before you can make some calculation!");
-                }
-                continue;
-            }
-
-            boolean isFunction = false;
-
-            switch (input) {
-                case "=":
-                    printStackContent(calculatorEngine);
-                    break;
-                case "help":
-                    displayHelp();
-                    break;
-                case "clear":
-                    calculatorEngine.clear();
-                    break;
-                case "pop":
-                    calculatorEngine.removeLastNumber();
-                    break;
-                case "quit":
-                    System.exit(0);
-                default:
-                    isFunction = true;
-            }
-            if (isFunction) {
-                if (functions.containsKey(input)) {
-                    FunctionType functionType = functions.get(input);
-
-                    calculatorEngine.applyFunction(functionType);
-                    continue;
-                }
-                throw new Exception("This is not good to corrupt my list, hack3rm4n!");
-            }
+            String input = scanner.next();
+            parseInput(calculatorEngine, input);
         }
     }
 }

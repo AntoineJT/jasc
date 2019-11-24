@@ -25,14 +25,20 @@
  * SOFTWARE.
  */
 
-package com.github.antoinejt.jasc;
+package com.github.antoinejt.jasc.util;
 
-public class Main {
-    public static void main(String[] args) {
-        try {
-            ConsoleUI.useConsole();
-        } catch (UnsupportedOperationException exception) {
-            exception.printStackTrace();
-        }
+import java.util.HashMap;
+
+// TODO Write javadoc for it and put it into code repository
+public class HashMapBuilder<K, V> {
+    private final HashMap<K, V> map = new HashMap<>();
+
+    public HashMapBuilder<K, V> put(K key, V value) {
+        map.put(key, value);
+        return this;
+    }
+
+    public HashMap<K, V> build() {
+        return map;
     }
 }

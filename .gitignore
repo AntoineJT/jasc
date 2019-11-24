@@ -9,6 +9,7 @@
 # Gradle stuff
 .gradle/
 build/
+!gradle/wrapper/gradle-wrapper.jar
 
 # A folder I use to keep a copy of each build I provide
 versions/
