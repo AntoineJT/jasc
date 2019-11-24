@@ -1,0 +1,25 @@
+Available operators (acts on 2 operands) :
+	- + : Addition operator
+	- - : Substraction operator
+	- * : Multiplication operator
+	- / : Division operator
+	- % : Modulo operator
+	- ^ : Power operator
+Available functions (acts on 1 operand) : 
+	- sqrt : Perform a square root
+	- log : Perform a decimal logarithm
+	- ln : Perform a napierian logarithm
+	- lb : Perform a binary logarithm
+	- cos : Perform a cosine
+	- sin : Perform a sine
+	- tan : Perform a tangent
+	- arccos : Perform an arc cosine
+	- arcsin : Perform an arc sine
+	- arctan : Perform an arc tan
+	- exp : Make it exponent
+Available commands : 
+	- = : Print the content of the stack
+	- help : Show the list of available commands
+	- clear : Reset stack content
+	- pop : Remove last number from the stack
+	- quit : Allows to quit

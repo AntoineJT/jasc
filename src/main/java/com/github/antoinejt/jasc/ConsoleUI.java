@@ -33,7 +33,16 @@ import com.github.antoinejt.jasc.calculator.OperationType;
 import com.github.antoinejt.jasc.util.HashMapBuilder;
 import com.github.antoinejt.jasc.util.TextFormatter;
 
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 
 class ConsoleUI {
     private static Map<String, FunctionType> functions = new HashMapBuilder<String, FunctionType>()
@@ -59,35 +68,19 @@ class ConsoleUI {
             Arrays.asList("=", "help", "clear", "pop", "quit")
     );
 
-    // TODO Replace that by some txt templates (use of MVC)
     private static void displayHelp() {
-        TextFormatter.listThings("Available operators (acts on 2 operands) : ",
-                "+ : Addition operator",
-                "- : Substraction operator",
-                "* : Multiplication operator",
-                "/ : Division operator",
-                "% : Modulo operator",
-                "^ : Power operator").print();
-        TextFormatter.listThings("Available functions (acts on 1 operand) : ",
-                "sqrt : Perform a square root",
-                "log : Perform a decimal logarithm",
-                "ln : Perform a napierian logarithm",
-                "lb : Perform a binary logarithm",
-                "cos : Perform a cosine",
-                "sin : Perform a sine",
-                "tan : Perform a tangent",
-                "arccos : Perform an arc cosine",
-                "arcsin : Perform an arc sine",
-                "arctan : Perform an arc tan",
-                "exp : Make it exponent").print();
-        TextFormatter.listThings("Available commands : ",
-                "= : Print the content of the stack",
-                "help : Show the list of available commands",
-                "clear : Reset stack content",
-                "pop : Remove last number from the stack",
-                "quit : Allows to quit").print();
+        try {
+            InputStream stream = ConsoleUI.class.getResourceAsStream("/txt/cli/help.txt");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            while(reader.ready()) {
+                System.out.println(reader.readLine());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    // TODO Replace that by some txt templates (use of MVC)
     private static void displayIntro() {
         TextFormatter.printLines(
                 "Just Another Stack Calculator",
