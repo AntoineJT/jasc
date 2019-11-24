@@ -147,6 +147,7 @@ class ConsoleUI {
                 break;
             case "quit":
                 System.exit(0);
+                break;
             default: break;
         }
     }
