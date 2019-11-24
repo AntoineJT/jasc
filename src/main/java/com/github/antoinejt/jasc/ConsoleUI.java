@@ -147,6 +147,7 @@ class ConsoleUI {
                 break;
             case "quit":
                 System.exit(0);
+            default: break;
         }
     }
 
@@ -168,8 +169,8 @@ class ConsoleUI {
         }
     }
 
-    @SuppressWarnings("InfiniteLoopStatement")
-    static void useConsole() throws UnsupportedOperationException {
+    @SuppressWarnings({"InfiniteLoopStatement", "WeakerAccess"})
+    public static void useConsole() throws UnsupportedOperationException {
         displayIntro();
 
         CalculatorEngine calculatorEngine = new CalculatorEngine();
