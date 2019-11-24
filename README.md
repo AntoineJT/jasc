@@ -1,5 +1,7 @@
 # 🧮 Just Another Stack Calculator
 
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/AntoineJT/jasc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AntoineJT/jasc/alerts/) [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/AntoineJT/jasc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AntoineJT/jasc/context:java) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f80841715e3436dad0800ac6bf72480)](https://www.codacy.com/manual/antoinejt.serveur/jasc?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AntoineJT/jasc&amp;utm_campaign=Badge_Grade) [![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)](https://gitmoji.carloscuesta.me)
+
 🏫 *This is a school project ("SLAM2" end of the year project from first year of "BTS SIO").*
 
 You can get updates on [my repository](https://github.com/AntoineJT/jasc/).
