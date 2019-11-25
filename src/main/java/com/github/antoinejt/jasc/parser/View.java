@@ -31,6 +31,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
 public class View {
@@ -44,6 +46,18 @@ public class View {
 
     public View(String viewContent) {
         this.text = viewContent;
+    }
+
+    private static String getFileContentFromInside(String pathToFile) {
+        InputStream stream = View.class.getResourceAsStream(pathToFile);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        return reader.lines()
+                .collect(Collectors.joining("\n"));
+    }
+
+    public static View getViewFromInside(String pathToFile) {
+        String viewContent = getFileContentFromInside(pathToFile);
+        return new View(viewContent);
     }
 
     @Override

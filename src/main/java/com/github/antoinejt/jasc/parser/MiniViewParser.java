@@ -30,7 +30,7 @@ package com.github.antoinejt.jasc.parser;
 import java.util.Map;
 
 public class MiniViewParser {
-    private View view;
+    private final View view;
 
     public MiniViewParser(View view) {
         this.view = view;
@@ -38,6 +38,10 @@ public class MiniViewParser {
 
     public String parse(Map<String, String> data) throws IllegalStateException {
         String viewContent = view.toString();
+
+        if (data == null) {
+            return viewContent;
+        }
 
         if (!viewContent.contains("{{ ") || !viewContent.contains(" }}")) {
             return viewContent;

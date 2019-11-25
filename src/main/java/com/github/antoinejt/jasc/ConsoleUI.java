@@ -34,16 +34,12 @@ import com.github.antoinejt.jasc.parser.MiniViewParser;
 import com.github.antoinejt.jasc.parser.View;
 import com.github.antoinejt.jasc.util.HashMapBuilder;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 class ConsoleUI {
     private static final Map<String, FunctionType> functions = new HashMapBuilder<String, FunctionType>()
@@ -69,23 +65,16 @@ class ConsoleUI {
             Arrays.asList("=", "help", "clear", "pop", "quit")
     );
 
-    @SuppressWarnings("SameParameterValue")
-    private static String getContent(String pathToFile) {
-        InputStream stream = ConsoleUI.class.getResourceAsStream(pathToFile);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        return reader.lines()
-                .collect(Collectors.joining("\n"));
-    }
-
     private static void displayHelp() {
-        String helpContent = getContent("/views/cli/help.txt");
+        View helpView = View.getViewFromInside("/views/cli/help.txt");
+        MiniViewParser viewParser = new MiniViewParser(helpView);
+        String helpContent = viewParser.parse(null);
         System.out.println(helpContent);
     }
     
     private static void displayIntro() {
-        String viewContent = getContent("/views/cli/intro.txt");
-        View view = new View(viewContent);
-        MiniViewParser viewParser = new MiniViewParser(view);
+        View introView = View.getViewFromInside("/views/cli/intro.txt");
+        MiniViewParser viewParser = new MiniViewParser(introView);
         Map<String, String> data = new HashMapBuilder<String, String>()
                 .put("VERSION", ManifestInfos.VERSION.toString())
                 .put("LAST_UPDATE", ManifestInfos.LAST_UPDATE.toString()).build();
