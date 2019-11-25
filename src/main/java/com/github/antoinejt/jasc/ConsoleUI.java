@@ -33,10 +33,8 @@ import com.github.antoinejt.jasc.calculator.OperationType;
 import com.github.antoinejt.jasc.parser.MiniViewParser;
 import com.github.antoinejt.jasc.parser.View;
 import com.github.antoinejt.jasc.util.HashMapBuilder;
-import com.github.antoinejt.jasc.util.TextFormatter;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
