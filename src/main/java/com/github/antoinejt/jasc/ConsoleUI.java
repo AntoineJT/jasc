@@ -65,21 +65,22 @@ class ConsoleUI {
             Arrays.asList("=", "help", "clear", "pop", "quit")
     );
 
+    private static void displayViewFromInside(String pathToFile, Map<String, String> data) {
+        View view = View.getViewFromInside(pathToFile);
+        MiniViewParser viewParser = new MiniViewParser(view);
+        String viewContent = viewParser.parse(data);
+        System.out.println(viewContent);
+    }
+
     private static void displayHelp() {
-        View helpView = View.getViewFromInside("/views/cli/help.txt");
-        MiniViewParser viewParser = new MiniViewParser(helpView);
-        String helpContent = viewParser.parse(null);
-        System.out.println(helpContent);
+        displayViewFromInside("/views/cli/help.txt", null);
     }
     
     private static void displayIntro() {
-        View introView = View.getViewFromInside("/views/cli/intro.txt");
-        MiniViewParser viewParser = new MiniViewParser(introView);
         Map<String, String> data = new HashMapBuilder<String, String>()
                 .put("VERSION", ManifestInfos.VERSION.toString())
                 .put("LAST_UPDATE", ManifestInfos.LAST_UPDATE.toString()).build();
-        String introContent = viewParser.parse(data);
-        System.out.println(introContent);
+        displayViewFromInside("/views/cli/intro.txt", data);
     }
 
     private static void printStackContent(CalculatorEngine calculatorEngine) {
