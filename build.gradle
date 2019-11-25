@@ -20,7 +20,7 @@ def internalVersionNumber = "${versionNumber}${versioning.info.branch != 'master
 
 version "${versionNumber}-${versioning.info.full}"
 
-def jarName = "${jar.baseName}-${rootProject.version}.jar"
+def jarName = "${jar.archiveBaseName}-${rootProject.version}.jar"
 def runScript = "java -jar ${jarName}"
 
 sourceCompatibility = 1.8
