@@ -28,23 +28,9 @@
 package com.github.antoinejt.jasc.util;
 
 public class TextFormatter {
-    public static String formatLines(String prefix, String separator, String[] lines) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (String line : lines) {
-            stringBuilder
-                    .append(prefix)
-                    .append(line)
-                    .append(separator);
-        }
-        return stringBuilder.toString();
-    }
-
-    public static String formatLines(String prefix, String[] lines) {
-        return formatLines(prefix, "\n", lines);
-    }
-
     public static void printLines(String... lines) {
-        System.out.print(formatLines("", lines));
+        for (String line : lines) {
+            System.out.println(line);
+        }
     }
 }
