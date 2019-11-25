@@ -93,14 +93,18 @@ class ConsoleUI {
         System.err.println("Stack is empty!");
     }
 
+    private static void applyFunction(CalculatorEngine calculatorEngine, String input) {
+        FunctionType functionType = functions.get(input);
+        calculatorEngine.applyFunction(functionType);
+    }
+
     private static void parseInput(CalculatorEngine calculatorEngine, String input) {
         if (operators.containsKey(input)) {
             tryToApplyOperation(calculatorEngine, input);
             return;
         }
         if (functions.containsKey(input)) {
-            FunctionType functionType = functions.get(input);
-            calculatorEngine.applyFunction(functionType);
+            applyFunction(calculatorEngine, input);
             return;
         }
         if (commands.contains(input)) {
