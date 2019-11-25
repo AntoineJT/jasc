@@ -45,7 +45,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 class ConsoleUI {
-    private static Map<String, FunctionType> functions = new HashMapBuilder<String, FunctionType>()
+    private static final Map<String, FunctionType> functions = new HashMapBuilder<String, FunctionType>()
             .put("sqrt", FunctionType.SQRT)
             .put("log", FunctionType.LOG10)
             .put("ln", FunctionType.LN)
@@ -57,7 +57,7 @@ class ConsoleUI {
             .put("arcsin", FunctionType.ARCSIN)
             .put("arctan", FunctionType.ARCTAN)
             .put("exp", FunctionType.EXP).build();
-    private static Map<String, OperationType> operators = new HashMapBuilder<String, OperationType>()
+    private static final Map<String, OperationType> operators = new HashMapBuilder<String, OperationType>()
             .put("+", OperationType.ADDITION)
             .put("-", OperationType.SUBSTRACTION)
             .put("*", OperationType.MULTIPLICATION)
