@@ -83,23 +83,8 @@ class ConsoleUI {
         String helpContent = getContent("/txt/cli/help.txt");
         System.out.println(helpContent);
     }
-
-    // TODO Replace that by some txt templates (use of MVC)
+    
     private static void displayIntro() {
-        /*
-        TextFormatter.printLines(
-                "Just Another Stack Calculator",
-                "-------------------------------",
-                "Created by Antoine James Tournepiche",
-                "Repository link : https://github.com/AntoineJT/jasc",
-                "-----------------------------------------------------",
-                "Version : " + ManifestInfos.VERSION,
-                "Last update : " + ManifestInfos.LAST_UPDATE,
-                "--------------------------------",
-                "This calculator uses a stack, so you must define at least 2 numbers before using some calculation operator",
-                "You must type numbers with or without a dot, not a comma",
-                "To know available commands, you can type help");
-         */
         String viewContent = getContent("/txt/cli/intro.txt");
         View view = new View(viewContent);
         MiniViewParser viewParser = new MiniViewParser(view);
