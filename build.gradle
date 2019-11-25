@@ -7,10 +7,10 @@ plugins {
 
 group 'com.github.antoinejt'
 
-def lastUpdate = 'November 3rd 2019'
+def lastUpdate = 'November 25th 2019'
 
 def majorVersionNumber = '0'
-def minorVersionNumber = '6'
+def minorVersionNumber = '7'
 def patchVersionNumber = '0'
 
 def versionNumber = "${majorVersionNumber}.${minorVersionNumber}.${patchVersionNumber}"
