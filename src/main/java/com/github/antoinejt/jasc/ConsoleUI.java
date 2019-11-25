@@ -68,13 +68,18 @@ class ConsoleUI {
             Arrays.asList("=", "help", "clear", "pop", "quit")
     );
 
+    @SuppressWarnings("SameParameterValue")
+    private static void printTextFromFile(String textFile) throws IOException {
+        InputStream stream = ConsoleUI.class.getResourceAsStream(textFile);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        while(reader.ready()) {
+            System.out.println(reader.readLine());
+        }
+    }
+
     private static void displayHelp() {
         try {
-            InputStream stream = ConsoleUI.class.getResourceAsStream("/txt/cli/help.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-            while(reader.ready()) {
-                System.out.println(reader.readLine());
-            }
+            printTextFromFile("/txt/cli/help.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
