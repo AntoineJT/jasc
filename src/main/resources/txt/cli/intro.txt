@@ -1,0 +1,11 @@
+Just Another Stack Calculator
+-------------------------------
+Created by Antoine James Tournepiche
+Repository link : https://github.com/AntoineJT/jasc
+-----------------------------------------------------
+Version : {{ VERSION }}
+Last update : {{ LAST_UPDATE }}
+--------------------------------
+This calculator uses a stack, so you must define at least 2 numbers before using some calculation operator
+You must type numbers with or without a dot, not a comma
+To know available commands, you can type help

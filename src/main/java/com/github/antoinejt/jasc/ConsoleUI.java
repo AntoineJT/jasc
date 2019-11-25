@@ -30,6 +30,8 @@ package com.github.antoinejt.jasc;
 import com.github.antoinejt.jasc.calculator.CalculatorEngine;
 import com.github.antoinejt.jasc.calculator.FunctionType;
 import com.github.antoinejt.jasc.calculator.OperationType;
+import com.github.antoinejt.jasc.parser.MiniViewParser;
+import com.github.antoinejt.jasc.parser.View;
 import com.github.antoinejt.jasc.util.HashMapBuilder;
 import com.github.antoinejt.jasc.util.TextFormatter;
 
@@ -43,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 class ConsoleUI {
     private static final Map<String, FunctionType> functions = new HashMapBuilder<String, FunctionType>()
@@ -69,24 +72,21 @@ class ConsoleUI {
     );
 
     @SuppressWarnings("SameParameterValue")
-    private static void printTextFromFile(String textFile) throws IOException {
-        InputStream stream = ConsoleUI.class.getResourceAsStream(textFile);
+    private static String getContent(String pathToFile) {
+        InputStream stream = ConsoleUI.class.getResourceAsStream(pathToFile);
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        while(reader.ready()) {
-            System.out.println(reader.readLine());
-        }
+        return reader.lines()
+                .collect(Collectors.joining("\n"));
     }
 
     private static void displayHelp() {
-        try {
-            printTextFromFile("/txt/cli/help.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String helpContent = getContent("/txt/cli/help.txt");
+        System.out.println(helpContent);
     }
 
     // TODO Replace that by some txt templates (use of MVC)
     private static void displayIntro() {
+        /*
         TextFormatter.printLines(
                 "Just Another Stack Calculator",
                 "-------------------------------",
@@ -99,6 +99,16 @@ class ConsoleUI {
                 "This calculator uses a stack, so you must define at least 2 numbers before using some calculation operator",
                 "You must type numbers with or without a dot, not a comma",
                 "To know available commands, you can type help");
+         */
+        String viewContent = getContent("/txt/cli/intro.txt");
+        View view = new View(viewContent);
+        MiniViewParser viewParser = new MiniViewParser(view);
+        Map<String, String> data = new HashMapBuilder<String, String>()
+                .put("VERSION", ManifestInfos.VERSION.toString())
+                .put("LAST_UPDATE", ManifestInfos.LAST_UPDATE.toString())
+                .build();
+        String introContent = viewParser.parse(data);
+        System.out.println(introContent);
     }
 
     private static void printStackContent(CalculatorEngine calculatorEngine) {
