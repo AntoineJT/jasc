@@ -98,7 +98,30 @@ class ConsoleUI {
         calculatorEngine.applyFunction(functionType);
     }
 
+    // TODO Rewrite it
+    // TODO Explain $ feature into help
     private static void parseInput(CalculatorEngine calculatorEngine, String input) {
+        if (input.startsWith("$")) {
+            input = input.substring(1);
+            if (commands.contains(input)) {
+                System.err.println("You can't recursively execute commands!");
+                return;
+            }
+            if (operators.containsKey(input)) {
+                while(calculatorEngine.getNumbers().size() > 1) {
+                    tryToApplyOperation(calculatorEngine, input);
+                }
+                return;
+            }
+            if (functions.containsKey(input)) {
+                System.err.println("This is not implemented yet and seems really error prone!");
+                /*
+                while(calculatorEngine.getNumbers().size() > 2) {
+                    applyFunction(calculatorEngine, input);
+                }
+                 */
+            }
+        }
         if (operators.containsKey(input)) {
             tryToApplyOperation(calculatorEngine, input);
             return;
