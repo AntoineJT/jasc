@@ -78,18 +78,17 @@ class ConsoleUI {
     }
 
     private static void displayHelp() {
-        String helpContent = getContent("/txt/cli/help.txt");
+        String helpContent = getContent("/views/cli/help.txt");
         System.out.println(helpContent);
     }
     
     private static void displayIntro() {
-        String viewContent = getContent("/txt/cli/intro.txt");
+        String viewContent = getContent("/views/cli/intro.txt");
         View view = new View(viewContent);
         MiniViewParser viewParser = new MiniViewParser(view);
         Map<String, String> data = new HashMapBuilder<String, String>()
                 .put("VERSION", ManifestInfos.VERSION.toString())
-                .put("LAST_UPDATE", ManifestInfos.LAST_UPDATE.toString())
-                .build();
+                .put("LAST_UPDATE", ManifestInfos.LAST_UPDATE.toString()).build();
         String introContent = viewParser.parse(data);
         System.out.println(introContent);
     }
