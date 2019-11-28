@@ -1,10 +1,6 @@
 # 🧮 Just Another Stack Calculator
 
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/AntoineJT/jasc?include_prereleases&style=flat)
-![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/AntoineJT/jasc)
 ![GitHub commits since latest release (branch)](https://img.shields.io/github/commits-since/AntoineJT/jasc/latest/develop)
-![GitHub last commit (branch)](https://img.shields.io/github/last-commit/AntoineJT/jasc/develop)
-
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/AntoineJT/jasc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AntoineJT/jasc/alerts/) 
 [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/AntoineJT/jasc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AntoineJT/jasc/context:java) 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f80841715e3436dad0800ac6bf72480)](https://www.codacy.com/manual/antoinejt.serveur/jasc?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AntoineJT/jasc&amp;utm_campaign=Badge_Grade) 
