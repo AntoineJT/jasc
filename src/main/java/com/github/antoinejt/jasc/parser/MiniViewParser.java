@@ -39,16 +39,14 @@ public class MiniViewParser {
     public String parse(Map<String, String> data) throws IllegalStateException {
         String viewContent = view.toString();
 
-        if (data == null) {
+        if (data == null
+                || !viewContent.contains("{{ ")
+                || !viewContent.contains(" }}")) {
             return viewContent;
         }
 
-        if (!viewContent.contains("{{ ") || !viewContent.contains(" }}")) {
-            return viewContent;
-        }
-
-        int beginCount = viewContent.split("\\{\\{ ").length - 1;
-        int endCount = viewContent.split(" }}").length - 1;
+        int beginCount = countOccurrences("\\{\\{ ");
+        int endCount = countOccurrences(" }}");
 
         if (beginCount != endCount) {
             throw new IllegalStateException("View is invalid! Please fix it!");
@@ -60,5 +58,10 @@ public class MiniViewParser {
         }
 
         return result;
+    }
+
+    private int countOccurrences(String regex) {
+        String viewContent = view.toString();
+        return viewContent.split(regex).length - 1;
     }
 }
