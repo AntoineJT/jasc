@@ -102,18 +102,18 @@ class ConsoleUI {
     // TODO Explain $ feature into help
     private static void parseInput(CalculatorEngine calculatorEngine, String input) {
         if (input.startsWith("$")) {
-            input = input.substring(1);
-            if (commands.contains(input)) {
+            String truncatedInput = input.substring(1);
+            if (commands.contains(truncatedInput)) {
                 System.err.println("You can't recursively execute commands!");
                 return;
             }
-            if (operators.containsKey(input)) {
+            if (operators.containsKey(truncatedInput)) {
                 while(calculatorEngine.getNumbers().size() > 1) {
-                    tryToApplyOperation(calculatorEngine, input);
+                    tryToApplyOperation(calculatorEngine, truncatedInput);
                 }
                 return;
             }
-            if (functions.containsKey(input)) {
+            if (functions.containsKey(truncatedInput)) {
                 System.err.println("This is not implemented yet and seems really error prone!");
                 /*
                 while(calculatorEngine.getNumbers().size() > 2) {

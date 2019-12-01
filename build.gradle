@@ -12,7 +12,7 @@ def lastUpdate = 'December 1st 2019'
 def majorVersionNumber = '0'
 def minorVersionNumber = '7'
 def patchVersionNumber = '0'
-def wipBuildNumber = '11' // if different from 0 it indicates that this is a wip version, not a yet released one
+def wipBuildNumber = '12' // if different from 0 it indicates that this is a wip version, not a yet released one
 
 def buildNumber = (wipBuildNumber != '0') ? "-alpha.${wipBuildNumber}" : ''
 def versionNumber = "${majorVersionNumber}.${minorVersionNumber}.${patchVersionNumber}${buildNumber}"
