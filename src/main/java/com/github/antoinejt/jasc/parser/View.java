@@ -29,8 +29,8 @@ package com.github.antoinejt.jasc.parser;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
@@ -38,10 +38,11 @@ import java.util.stream.Collectors;
 public class View {
     private final String text;
 
-    public View(File file) throws FileNotFoundException {
+    public View(File file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         this.text = reader.lines()
                 .collect(Collectors.joining("\n"));
+        reader.close();
     }
 
     public View(String viewContent) {
