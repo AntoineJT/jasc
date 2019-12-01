@@ -39,10 +39,14 @@ public class View {
     private final String text;
 
     public View(File file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        this.text = reader.lines()
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        this.text = bufferedReader.lines()
                 .collect(Collectors.joining("\n"));
-        reader.close();
+
+        bufferedReader.close();
+        fileReader.close();
     }
 
     public View(String viewContent) {
