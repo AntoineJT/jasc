@@ -44,24 +44,29 @@ public class MiniViewParser {
                 || !viewContent.contains(" }}")) {
             return viewContent;
         }
+        checkViewValidity();
+        return fillView(data);
+    }
 
+    private int countOccurrences(String regex) {
+        return view.toString().split(regex).length - 1;
+    }
+
+    private void checkViewValidity() throws IllegalStateException {
         int beginCount = countOccurrences("\\{\\{ ");
         int endCount = countOccurrences(" }}");
 
         if (beginCount != endCount) {
             throw new IllegalStateException("View is invalid! Please fix it!");
         }
+    }
 
-        String result = viewContent;
+    private String fillView(Map<String, String> data) {
+        String result = view.toString();
+
         for (Map.Entry<String, String> entry : data.entrySet()) {
             result = result.replaceAll("\\{\\{ " + entry.getKey() + " }}", entry.getValue());
         }
-
         return result;
-    }
-
-    private int countOccurrences(String regex) {
-        String viewContent = view.toString();
-        return viewContent.split(regex).length - 1;
     }
 }
