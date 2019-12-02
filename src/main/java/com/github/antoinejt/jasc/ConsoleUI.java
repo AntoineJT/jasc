@@ -30,13 +30,19 @@ package com.github.antoinejt.jasc;
 import com.github.antoinejt.jasc.calculator.CalculatorEngine;
 import com.github.antoinejt.jasc.calculator.FunctionType;
 import com.github.antoinejt.jasc.calculator.OperationType;
+import com.github.antoinejt.jasc.parser.MiniViewParser;
+import com.github.antoinejt.jasc.parser.View;
 import com.github.antoinejt.jasc.util.HashMapBuilder;
-import com.github.antoinejt.jasc.util.TextFormatter;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 
 class ConsoleUI {
-    private static Map<String, FunctionType> functions = new HashMapBuilder<String, FunctionType>()
+    private static final Map<String, FunctionType> functions = new HashMapBuilder<String, FunctionType>()
             .put("sqrt", FunctionType.SQRT)
             .put("log", FunctionType.LOG10)
             .put("ln", FunctionType.LN)
@@ -48,7 +54,7 @@ class ConsoleUI {
             .put("arcsin", FunctionType.ARCSIN)
             .put("arctan", FunctionType.ARCTAN)
             .put("exp", FunctionType.EXP).build();
-    private static Map<String, OperationType> operators = new HashMapBuilder<String, OperationType>()
+    private static final Map<String, OperationType> operators = new HashMapBuilder<String, OperationType>()
             .put("+", OperationType.ADDITION)
             .put("-", OperationType.SUBSTRACTION)
             .put("*", OperationType.MULTIPLICATION)
@@ -59,48 +65,22 @@ class ConsoleUI {
             Arrays.asList("=", "help", "clear", "pop", "quit")
     );
 
-    // TODO Replace that by some txt templates (use of MVC)
-    private static void displayHelp() {
-        TextFormatter.listThings("Available operators (acts on 2 operands) : ",
-                "+ : Addition operator",
-                "- : Substraction operator",
-                "* : Multiplication operator",
-                "/ : Division operator",
-                "% : Modulo operator",
-                "^ : Power operator").print();
-        TextFormatter.listThings("Available functions (acts on 1 operand) : ",
-                "sqrt : Perform a square root",
-                "log : Perform a decimal logarithm",
-                "ln : Perform a napierian logarithm",
-                "lb : Perform a binary logarithm",
-                "cos : Perform a cosine",
-                "sin : Perform a sine",
-                "tan : Perform a tangent",
-                "arccos : Perform an arc cosine",
-                "arcsin : Perform an arc sine",
-                "arctan : Perform an arc tan",
-                "exp : Make it exponent").print();
-        TextFormatter.listThings("Available commands : ",
-                "= : Print the content of the stack",
-                "help : Show the list of available commands",
-                "clear : Reset stack content",
-                "pop : Remove last number from the stack",
-                "quit : Allows to quit").print();
+    private static void displayViewFromInside(String pathToFile, Map<String, String> data) {
+        View view = View.getViewFromInside(pathToFile);
+        MiniViewParser viewParser = new MiniViewParser(view);
+        String viewContent = viewParser.parse(data);
+        System.out.println(viewContent);
     }
 
+    private static void displayHelp() {
+        displayViewFromInside("/views/cli/help.txt", null);
+    }
+    
     private static void displayIntro() {
-        TextFormatter.printLines(
-                "Just Another Stack Calculator",
-                "-------------------------------",
-                "Created by Antoine James Tournepiche",
-                "Repository link : https://github.com/AntoineJT/jasc",
-                "-----------------------------------------------------",
-                "Version : " + ManifestInfos.VERSION,
-                "Last update : " + ManifestInfos.LAST_UPDATE,
-                "--------------------------------",
-                "This calculator uses a stack, so you must define at least 2 numbers before using some calculation operator",
-                "You must type numbers with or without a dot, not a comma",
-                "To know available commands, you can type help");
+        Map<String, String> data = new HashMapBuilder<String, String>()
+                .put("VERSION", ManifestInfos.VERSION.toString())
+                .put("LAST_UPDATE", ManifestInfos.LAST_UPDATE.toString()).build();
+        displayViewFromInside("/views/cli/intro.txt", data);
     }
 
     private static void printStackContent(CalculatorEngine calculatorEngine) {
@@ -113,14 +93,25 @@ class ConsoleUI {
         System.err.println("Stack is empty!");
     }
 
-    private static void parseInput(CalculatorEngine calculatorEngine, String input) {
+    private static void applyFunction(CalculatorEngine calculatorEngine, String input) {
+        FunctionType functionType = functions.get(input);
+        calculatorEngine.applyFunction(functionType);
+    }
+
+    // TODO Explain $ feature into help
+    private static void executeInput(CalculatorEngine calculatorEngine, String input) {
+        if (input.startsWith("$")) {
+            String truncatedInput = input.substring(1);
+            loopInputExecution(calculatorEngine, truncatedInput);
+            return;
+        }
+
         if (operators.containsKey(input)) {
             tryToApplyOperation(calculatorEngine, input);
             return;
         }
         if (functions.containsKey(input)) {
-            FunctionType functionType = functions.get(input);
-            calculatorEngine.applyFunction(functionType);
+            applyFunction(calculatorEngine, input);
             return;
         }
         if (commands.contains(input)) {
@@ -129,6 +120,26 @@ class ConsoleUI {
         }
 
         tryToAddNumberToTheStack(calculatorEngine, input);
+    }
+
+    private static void loopInputExecution(CalculatorEngine calculatorEngine, String input) {
+        if (commands.contains(input)) {
+            System.err.println("You can't recursively execute commands!");
+            return;
+        }
+        if (operators.containsKey(input)) {
+            loopOperatorExecution(calculatorEngine, input);
+            return;
+        }
+        if (functions.containsKey(input)) {
+            System.err.println("This has not been implemented yet because it seems really error prone!");
+        }
+    }
+
+    private static void loopOperatorExecution(CalculatorEngine calculatorEngine, String input) {
+        while(calculatorEngine.getNumbers().size() > 1) {
+            tryToApplyOperation(calculatorEngine, input);
+        }
     }
 
     private static void executeCommand(CalculatorEngine calculatorEngine, String input) {
@@ -179,7 +190,7 @@ class ConsoleUI {
 
         while (true) {
             String input = scanner.next();
-            parseInput(calculatorEngine, input);
+            executeInput(calculatorEngine, input);
         }
     }
 }

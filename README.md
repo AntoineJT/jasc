@@ -1,10 +1,28 @@
 # 🧮 Just Another Stack Calculator
 
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/AntoineJT/jasc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AntoineJT/jasc/alerts/) [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/AntoineJT/jasc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AntoineJT/jasc/context:java) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f80841715e3436dad0800ac6bf72480)](https://www.codacy.com/manual/antoinejt.serveur/jasc?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AntoineJT/jasc&amp;utm_campaign=Badge_Grade) [![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)](https://gitmoji.carloscuesta.me)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/AntoineJT/jasc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AntoineJT/jasc/alerts/) 
+[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/AntoineJT/jasc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AntoineJT/jasc/context:java) 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f80841715e3436dad0800ac6bf72480)](https://www.codacy.com/manual/antoinejt.serveur/jasc?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AntoineJT/jasc&amp;utm_campaign=Badge_Grade) 
+![GitHub](https://img.shields.io/github/license/AntoineJT/jasc)
+[![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat)](https://gitmoji.carloscuesta.me)
 
 🏫 *This is a school project ("SLAM2" end of the year project from first year of "BTS SIO").*
 
 You can get updates on [my repository](https://github.com/AntoineJT/jasc/).
+
+## 🔀 Branches status
+
+### master
+
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FAntoineJT%2Fjasc%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/AntoineJT/jasc/goto?ref=master)
+![GitHub commits since latest release (branch)](https://img.shields.io/github/commits-since/AntoineJT/jasc/latest/master)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/AntoineJT/jasc/master)
+
+### develop
+
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FAntoineJT%2Fjasc%2Fbadge%3Fref%3Ddevelop&style=flat)](https://actions-badge.atrox.dev/AntoineJT/jasc/goto?ref=develop)
+![GitHub commits since latest release (branch)](https://img.shields.io/github/commits-since/AntoineJT/jasc/latest/develop)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/AntoineJT/jasc/develop)
 
 ## 🥅 Purpose
 

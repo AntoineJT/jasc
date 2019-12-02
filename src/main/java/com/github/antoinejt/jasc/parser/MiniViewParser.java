@@ -25,48 +25,48 @@
  * SOFTWARE.
  */
 
-package com.github.antoinejt.jasc.util;
+package com.github.antoinejt.jasc.parser;
 
-public class TextFormatter {
-    public static final class FormattedText {
-        private final String formattedText;
+import java.util.Map;
 
-        private FormattedText(String formattedText) {
-            this.formattedText = formattedText;
+public class MiniViewParser {
+    private final View view;
+
+    public MiniViewParser(View view) {
+        this.view = view;
+    }
+
+    public String parse(Map<String, String> data) throws IllegalStateException {
+        String viewContent = view.toString();
+
+        if (data == null
+                || !viewContent.contains("{{ ")
+                || !viewContent.contains(" }}")) {
+            return viewContent;
         }
+        checkViewValidity();
+        return fillView(data);
+    }
 
-        @Override
-        public String toString() {
-            return formattedText;
-        }
+    private int countOccurrences(String regex) {
+        return view.toString().split(regex).length - 1;
+    }
 
-        public void print() {
-            System.out.print(formattedText);
+    private void checkViewValidity() throws IllegalStateException {
+        int beginCount = countOccurrences("\\{\\{ ");
+        int endCount = countOccurrences(" }}");
+
+        if (beginCount != endCount) {
+            throw new IllegalStateException("View is invalid! Please fix it!");
         }
     }
 
-    public static FormattedText formatLines(String prefix, String separator, String[] lines) {
-        StringBuilder stringBuilder = new StringBuilder();
+    private String fillView(Map<String, String> data) {
+        String result = view.toString();
 
-        for (String line : lines) {
-            stringBuilder
-                    .append(prefix)
-                    .append(line)
-                    .append(separator);
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            result = result.replaceAll("\\{\\{ " + entry.getKey() + " }}", entry.getValue());
         }
-        return new FormattedText(stringBuilder.toString());
-    }
-
-    public static FormattedText formatLines(String prefix, String[] lines) {
-        return formatLines(prefix, "\n", lines);
-    }
-
-    public static void printLines(String... lines) {
-        System.out.print(formatLines("", lines));
-    }
-
-    public static FormattedText listThings(String label, String... lines) {
-        FormattedText formattedText = formatLines("\t- ", "\n", lines);
-        return new FormattedText(label + "\n" + formattedText);
+        return result;
     }
 }

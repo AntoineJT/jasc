@@ -7,18 +7,20 @@ plugins {
 
 group 'com.github.antoinejt'
 
-def lastUpdate = 'November 3rd 2019'
+def lastUpdate = 'December 2nd 2019'
 
 def majorVersionNumber = '0'
-def minorVersionNumber = '6'
+def minorVersionNumber = '7'
 def patchVersionNumber = '0'
+def wipBuildNumber = '14' // if different from 0 it indicates that this is a wip version, not a yet released one
 
-def versionNumber = "${majorVersionNumber}.${minorVersionNumber}.${patchVersionNumber}"
+def buildNumber = (wipBuildNumber != '0') ? "-alpha.${wipBuildNumber}" : ''
+def versionNumber = "${majorVersionNumber}.${minorVersionNumber}.${patchVersionNumber}${buildNumber}"
 def internalVersionNumber = "${versionNumber}${versioning.info.branch != 'master' ? '-DEVELOP' : ''}"
 
 version "${versionNumber}-${versioning.info.full}"
 
-def jarName = "${jar.baseName}-${rootProject.version}.jar"
+def jarName = "${jar.archiveBaseName.getOrNull()}-${rootProject.version}.jar"
 def runScript = "java -jar ${jarName}"
 
 sourceCompatibility = 1.8
@@ -53,5 +55,5 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
