@@ -99,7 +99,7 @@ class ConsoleUI {
     }
 
     // TODO Explain $ feature into help
-    private static void parseInput(CalculatorEngine calculatorEngine, String input) {
+    private static void executeInput(CalculatorEngine calculatorEngine, String input) {
         if (input.startsWith("$")) {
             String truncatedInput = input.substring(1);
             loopInputExecution(calculatorEngine, truncatedInput);
@@ -128,7 +128,7 @@ class ConsoleUI {
             return;
         }
         if (operators.containsKey(input)) {
-            loopOperatorsExecution(calculatorEngine, input);
+            loopOperatorExecution(calculatorEngine, input);
             return;
         }
         if (functions.containsKey(input)) {
@@ -136,7 +136,7 @@ class ConsoleUI {
         }
     }
 
-    private static void loopOperatorsExecution(CalculatorEngine calculatorEngine, String input) {
+    private static void loopOperatorExecution(CalculatorEngine calculatorEngine, String input) {
         while(calculatorEngine.getNumbers().size() > 1) {
             tryToApplyOperation(calculatorEngine, input);
         }
@@ -190,7 +190,7 @@ class ConsoleUI {
 
         while (true) {
             String input = scanner.next();
-            parseInput(calculatorEngine, input);
+            executeInput(calculatorEngine, input);
         }
     }
 }
