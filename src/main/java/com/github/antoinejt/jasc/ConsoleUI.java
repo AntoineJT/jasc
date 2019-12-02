@@ -98,30 +98,14 @@ class ConsoleUI {
         calculatorEngine.applyFunction(functionType);
     }
 
-    // TODO Rewrite it
     // TODO Explain $ feature into help
     private static void parseInput(CalculatorEngine calculatorEngine, String input) {
         if (input.startsWith("$")) {
             String truncatedInput = input.substring(1);
-            if (commands.contains(truncatedInput)) {
-                System.err.println("You can't recursively execute commands!");
-                return;
-            }
-            if (operators.containsKey(truncatedInput)) {
-                while(calculatorEngine.getNumbers().size() > 1) {
-                    tryToApplyOperation(calculatorEngine, truncatedInput);
-                }
-                return;
-            }
-            if (functions.containsKey(truncatedInput)) {
-                System.err.println("This is not implemented yet and seems really error prone!");
-                /*
-                while(calculatorEngine.getNumbers().size() > 2) {
-                    applyFunction(calculatorEngine, input);
-                }
-                 */
-            }
+            loopInputExecution(calculatorEngine, truncatedInput);
+            return;
         }
+
         if (operators.containsKey(input)) {
             tryToApplyOperation(calculatorEngine, input);
             return;
@@ -136,6 +120,26 @@ class ConsoleUI {
         }
 
         tryToAddNumberToTheStack(calculatorEngine, input);
+    }
+
+    private static void loopInputExecution(CalculatorEngine calculatorEngine, String input) {
+        if (commands.contains(input)) {
+            System.err.println("You can't recursively execute commands!");
+            return;
+        }
+        if (operators.containsKey(input)) {
+            loopOperatorsExecution(calculatorEngine, input);
+            return;
+        }
+        if (functions.containsKey(input)) {
+            System.err.println("This has not been implemented yet because it seems really error prone!");
+        }
+    }
+
+    private static void loopOperatorsExecution(CalculatorEngine calculatorEngine, String input) {
+        while(calculatorEngine.getNumbers().size() > 1) {
+            tryToApplyOperation(calculatorEngine, input);
+        }
     }
 
     private static void executeCommand(CalculatorEngine calculatorEngine, String input) {
