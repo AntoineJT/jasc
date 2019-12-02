@@ -23,3 +23,5 @@ Available commands :
 	- clear : Reset stack content
 	- pop : Remove last number from the stack
 	- quit : Allows to quit
+Special features:
+	- put a $ before an operator to loop its execution (i.e. $+ will make sum of all the stack numbers)
