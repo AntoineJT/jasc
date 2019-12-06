@@ -174,7 +174,7 @@ class ConsoleUI {
 
     private static void tryToAddNumberToTheStack(CalculatorEngine calculatorEngine, String input) {
         try {
-            float number = Float.parseFloat(input);
+            double number = Double.parseDouble(input);
             calculatorEngine.addNumber(number);
         } catch (NumberFormatException unused) {
             System.err.println("Your input is invalid!");

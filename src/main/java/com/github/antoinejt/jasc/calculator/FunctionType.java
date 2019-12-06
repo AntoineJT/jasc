@@ -42,13 +42,13 @@ public enum FunctionType {
     ARCTAN(Math::atan),
     EXP(Math::exp);
 
-    private final Function<Float, Double> function;
+    private final Function<Double, Double> function;
 
-    FunctionType(Function<Float, Double> function) {
+    FunctionType(Function<Double, Double> function) {
         this.function = function;
     }
 
-    private static int computeBinaryLog(float number) {
+    private static int computeBinaryLog(double number) {
         // https://stackoverflow.com/questions/3305059/how-do-you-calculate-log-base-2-in-java-for-integers
         double logNumber = Math.log(number);
         double log2 = Math.log(2);
@@ -56,7 +56,7 @@ public enum FunctionType {
         return (int) (logNumber / log2 + 1e-10);
     }
 
-    public double apply(float number) {
+    public double apply(double number) {
         return function.apply(number);
     }
 }

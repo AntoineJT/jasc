@@ -31,9 +31,9 @@ import java.util.List;
 import java.util.Stack;
 
 public class CalculatorEngine {
-    private Stack<Float> stack = new Stack<>(); // TODO MrMicky says that it's better to use Deque instead of Stack
+    private Stack<Double> stack = new Stack<>(); // TODO MrMicky says that it's better to use Deque instead of Stack
 
-    public void addNumber(float number) {
+    public void addNumber(double number) {
         stack.push(number);
     }
 
@@ -47,7 +47,7 @@ public class CalculatorEngine {
 
     public void applyFunction(FunctionType functionType) {
         try {
-            float result = (float) getFunctionResult(functionType);
+            double result = getFunctionResult(functionType);
             stack.push(result);
         } catch (IllegalStateException unused) {
             System.err.println("No operand left to apply this function to!");
@@ -59,7 +59,7 @@ public class CalculatorEngine {
             throw new IllegalStateException("Stack is empty!");
         }
 
-        float number = stack.pop();
+        double number = stack.pop();
         return functionType.apply(number);
     }
 
@@ -72,20 +72,20 @@ public class CalculatorEngine {
             throw new IllegalStateException("Can't operate without at least 2 operands!");
         }
 
-        float[] operands = getOperands();
+        double[] operands = getOperands();
 
-        if (operation == OperationType.DIVISION && operands[0] == 0.0f) {
+        if (operation == OperationType.DIVISION && operands[0] == 0.0d) {
             System.err.println("Division by zero!");
             reinjectOperandsIntoTheStack(operands);
             return;
         }
 
-        float result = getOperationResult(operation, operands);
+        double result = getOperationResult(operation, operands);
         stack.push(result);
     }
 
-    private float[] getOperands() {
-        float[] operands = new float[2];
+    private double[] getOperands() {
+        double[] operands = new double[2];
 
         for (int i = 0; i < 2; i++) {
             operands[i] = stack.pop();
@@ -93,7 +93,7 @@ public class CalculatorEngine {
         return operands;
     }
 
-    private void reinjectOperandsIntoTheStack(float[] operands) {
+    private void reinjectOperandsIntoTheStack(double[] operands) {
         assert operands.length == 2;
 
         for (int i = 0; i < 2; i++) {
@@ -101,11 +101,11 @@ public class CalculatorEngine {
         }
     }
 
-    private float getOperationResult(OperationType operation, float[] operands) {
+    private double getOperationResult(OperationType operation, double[] operands) {
         assert operands.length >= 2;
 
-        float a = operands[0];
-        float b = operands[1];
+        double a = operands[0];
+        double b = operands[1];
 
         return operation.apply(a, b);
     }
