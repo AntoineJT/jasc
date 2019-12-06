@@ -86,19 +86,16 @@ public class CalculatorEngine {
 
     private double[] getOperands() {
         double[] operands = new double[2];
-
-        for (int i = 0; i < 2; i++) {
-            operands[i] = stack.pop();
-        }
+        operands[0] = stack.pop();
+        operands[1] = stack.pop();
         return operands;
     }
 
     private void reinjectOperandsIntoTheStack(double[] operands) {
         assert operands.length == 2;
 
-        for (int i = 0; i < 2; i++) {
-            stack.push(operands[1 - i]);
-        }
+        stack.push(operands[1]);
+        stack.push(operands[0]);
     }
 
     private double getOperationResult(OperationType operation, double[] operands) {
