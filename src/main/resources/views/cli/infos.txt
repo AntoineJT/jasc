@@ -1,0 +1,12 @@
+Build infos
+------------
+Version : {{ VERSION }}
+Last update : {{ LAST_UPDATE }}
+Revision (Commit hash) : {{ REVISION }}
+
+Built by : {{ BUILT_BY }}
+Build Timestamp : {{ TIMESTAMP }}
+
+Compiled with : {{ COMPILED_WITH }}
+Build JDK : {{ BUILD_JDK }}
+Build OS : {{ BUILD_OS }}
