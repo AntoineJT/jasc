@@ -13,3 +13,4 @@ build/
 
 # A folder I use to keep a copy of each build I provide
 versions/
+/test_out/
