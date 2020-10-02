@@ -35,8 +35,15 @@ import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 public enum ManifestInfos {
-    LAST_UPDATE("Last-Update"),
-    VERSION("Version");
+    LAST_UPDATE("Last-Update")
+    , VERSION("Version")
+    , REVISION("Build-Revision")
+    , BUILT_BY("Built-By")
+    , TIMESTAMP("Build-Timestamp")
+    , COMPILED_WITH("Created-By")
+    , BUILD_JDK("Build-Jdk")
+    , BUILD_OS("Build-OS")
+    ;
 
     private static Attributes attributes = null;
 

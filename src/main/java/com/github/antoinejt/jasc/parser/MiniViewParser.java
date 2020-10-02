@@ -44,10 +44,12 @@ public class MiniViewParser {
                 || !viewContent.contains(" }}")) {
             return viewContent;
         }
-        checkViewValidity();
+        // TODO Fix the bad count bug
+        // checkViewValidity();
         return fillView(data);
     }
 
+    /*
     private int countOccurrences(String regex) {
         return view.toString().split(regex).length - 1;
     }
@@ -60,6 +62,7 @@ public class MiniViewParser {
             throw new IllegalStateException("View is invalid! Please fix it!");
         }
     }
+     */
 
     private String fillView(Map<String, String> data) {
         String result = view.toString();

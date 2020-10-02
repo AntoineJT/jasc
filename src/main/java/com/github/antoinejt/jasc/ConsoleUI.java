@@ -62,7 +62,7 @@ class ConsoleUI {
             .put("%", OperationType.MODULO)
             .put("^", OperationType.POWER).build();
     private static final Set<String> commands = new HashSet<>(
-            Arrays.asList("=", "help", "clear", "pop", "quit")
+            Arrays.asList("=", "help", "clear", "pop", "infos", "quit")
     );
 
     private static void displayViewFromInside(String pathToFile, Map<String, String> data) {
@@ -70,6 +70,19 @@ class ConsoleUI {
         MiniViewParser viewParser = new MiniViewParser(view);
         String viewContent = viewParser.parse(data);
         System.out.println(viewContent);
+    }
+
+    private static void displayInfos() {
+        Map<String, String> data = new HashMapBuilder<String, String>()
+                .put("VERSION", ManifestInfos.VERSION.toString())
+                .put("LAST_UPDATE", ManifestInfos.LAST_UPDATE.toString())
+                .put("REVISION", ManifestInfos.REVISION.toString())
+                .put("BUILT_BY", ManifestInfos.BUILT_BY.toString())
+                .put("TIMESTAMP", ManifestInfos.TIMESTAMP.toString())
+                .put("COMPILED_WITH", ManifestInfos.COMPILED_WITH.toString())
+                .put("BUILD_JDK", ManifestInfos.BUILD_JDK.toString())
+                .put("BUILD_OS", ManifestInfos.BUILD_OS.toString()).build();
+        displayViewFromInside("/views/cli/infos.txt", data);
     }
 
     private static void displayHelp() {
@@ -156,6 +169,9 @@ class ConsoleUI {
             case "pop":
                 calculatorEngine.removeLastNumber();
                 break;
+            case "infos":
+                displayInfos();
+                break;
             case "quit":
                 System.exit(0);
                 break;
@@ -174,7 +190,7 @@ class ConsoleUI {
 
     private static void tryToAddNumberToTheStack(CalculatorEngine calculatorEngine, String input) {
         try {
-            float number = Float.parseFloat(input);
+            double number = Double.parseDouble(input);
             calculatorEngine.addNumber(number);
         } catch (NumberFormatException unused) {
             System.err.println("Your input is invalid!");
